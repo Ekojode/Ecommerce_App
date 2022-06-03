@@ -1,47 +1,49 @@
+//import 'package:ecommerce_app/models/products.dart';
 import 'package:flutter/material.dart';
 
-class ProductItem extends StatefulWidget {
+class ProductItem extends StatelessWidget {
   final String imgUrl;
   final String title;
   final double price;
+  final bool isTapped;
+  final VoidCallback onPressed;
   const ProductItem(
       {Key? key,
       required this.imgUrl,
       required this.title,
-      required this.price})
+      required this.price,
+      required this.isTapped,
+      required this.onPressed})
       : super(key: key);
 
-  @override
+/*  @override
   State<ProductItem> createState() => _ProductItemState();
 }
 
 //final Color buttonColor = Colors.red;
 
 class _ProductItemState extends State<ProductItem> {
-  bool _isTapped = false;
-  @override
+  // bool _isTapped = false;
+
+  // final _saved = <Products>[];
+  @override*/
   //bool _isTapped = false;
+  @override
   Widget build(BuildContext context) {
     return GridTile(
       header: GridTileBar(
           //s  backgroundColor: Colors.red,
           trailing: IconButton(
-        onPressed: () {
-          // Icons.abc;
-          setState(() {
-            _isTapped = !_isTapped;
-            // buttonColor = Colors.accents;
-          });
-        },
+        onPressed: onPressed,
         icon: Icon(
           Icons.favorite,
-          color: _isTapped ? Colors.red : Colors.amber,
+          color: isTapped ? Colors.red : Colors.amber,
         ),
       )),
       footer: GridTileBar(
         backgroundColor: Colors.black54,
-        title: Text(widget.title),
-        subtitle: Text("₦ ${widget.price.toString()}"),
+        title: Text(title),
+        subtitle: Text("₦ ${price.toString()}"),
       ),
       child: ClipRRect(
         borderRadius: const BorderRadius.only(
@@ -50,7 +52,7 @@ class _ProductItemState extends State<ProductItem> {
             topLeft: Radius.circular(15),
             topRight: Radius.circular(15)),
         child: Image.network(
-          widget.imgUrl,
+          imgUrl,
           fit: BoxFit.cover,
         ),
       ),

@@ -2,6 +2,7 @@ import 'package:ecommerce_app/models/products.dart';
 
 List<Products> dummyProducts = [
   Products(
+    // isFavourite: false,
     id: 'p1',
     title: 'Red Shirt',
     description: 'A red shirt - it is pretty red!',
@@ -16,6 +17,20 @@ List<Products> dummyProducts = [
     price: 59.99,
     imageUrl:
         'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/Trousers%2C_dress_%28AM_1960.022-8%29.jpg/512px-Trousers%2C_dress_%28AM_1960.022-8%29.jpg',
+  ),
+  Products(
+    id: 'p3',
+    title: 'Yellow Scarf',
+    description: 'Warm and cozy - exactly what you need for the winter.',
+    price: 19.99,
+    imageUrl: 'https://live.staticflickr.com/4043/4438260868_cc79b3369d_z.jpg',
+  ),
+  Products(
+    id: 'p3',
+    title: 'Yellow Scarf',
+    description: 'Warm and cozy - exactly what you need for the winter.',
+    price: 19.99,
+    imageUrl: 'https://live.staticflickr.com/4043/4438260868_cc79b3369d_z.jpg',
   ),
   Products(
     id: 'p3',
