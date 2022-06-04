@@ -1,4 +1,5 @@
 //import 'package:ecommerce_app/models/products.dart';
+import 'package:ecommerce_app/screens/products_detail_screen.dart';
 import 'package:flutter/material.dart';
 
 class ProductItem extends StatelessWidget {
@@ -6,14 +7,16 @@ class ProductItem extends StatelessWidget {
   final String title;
   final double price;
   final bool isTapped;
-  final VoidCallback onPressed;
+  final String id;
+  //final VoidCallback onPressed;
   const ProductItem(
       {Key? key,
       required this.imgUrl,
       required this.title,
       required this.price,
       required this.isTapped,
-      required this.onPressed})
+      //  required this.onPressed,
+      required this.id})
       : super(key: key);
 
 /*  @override
@@ -30,30 +33,38 @@ class _ProductItemState extends State<ProductItem> {
   //bool _isTapped = false;
   @override
   Widget build(BuildContext context) {
-    return GridTile(
-      header: GridTileBar(
-          //s  backgroundColor: Colors.red,
-          trailing: IconButton(
-        onPressed: onPressed,
-        icon: Icon(
-          Icons.favorite,
-          color: isTapped ? Colors.red : Colors.amber,
-        ),
-      )),
-      footer: GridTileBar(
-        backgroundColor: Colors.black54,
-        title: Text(title),
-        subtitle: Text("₦ ${price.toString()}"),
-      ),
-      child: ClipRRect(
-        borderRadius: const BorderRadius.only(
-            bottomLeft: Radius.circular(15),
-            bottomRight: Radius.circular(15),
-            topLeft: Radius.circular(15),
-            topRight: Radius.circular(15)),
-        child: Image.network(
-          imgUrl,
-          fit: BoxFit.cover,
+    return InkWell(
+      onTap: () {
+        Navigator.pushNamed(context, ProduuctsDetailScreen.routeName,
+            arguments: id);
+      },
+      child: GridTile(
+        /*  header: GridTileBar(
+            //s  backgroundColor: Colors.red,
+            trailing: IconButton(
+        //  onPressed: onPressed,
+          icon: Icon(
+            Icons.favorite,
+            color: isTapped ? Colors.red : Colors.white,
+          ),
+        )),*/
+        footer: GridTileBar(
+            backgroundColor: Colors.black54,
+            title: Text(title),
+            subtitle: Text("₦ ${price.toString()}"),
+            trailing: const Icon(
+              Icons.favorite_outline,
+            )),
+        child: ClipRRect(
+          borderRadius: const BorderRadius.only(
+              bottomLeft: Radius.circular(15),
+              bottomRight: Radius.circular(15),
+              topLeft: Radius.circular(15),
+              topRight: Radius.circular(15)),
+          child: Image.network(
+            imgUrl,
+            fit: BoxFit.cover,
+          ),
         ),
       ),
     );

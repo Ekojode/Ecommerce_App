@@ -1,4 +1,7 @@
+import 'package:ecommerce_app/providers/products_providers.dart';
+import 'package:ecommerce_app/screens/products_detail_screen.dart';
 import "package:flutter/material.dart";
+import 'package:provider/provider.dart';
 
 //import './screens/home_screen.dart';
 import './screens/products_overview_screen.dart';
@@ -12,10 +15,17 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(scaffoldBackgroundColor: const Color(0xfff9f9f9)),
-      home: const ProductsOverviewScreen(),
+    return Provider<Products>(
+      create: (BuildContext context) => Products(),
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(scaffoldBackgroundColor: const Color(0xfff9f9f9)),
+        home: const ProductsOverviewScreen(),
+        routes: {
+          ProduuctsDetailScreen.routeName: (context) =>
+              const ProduuctsDetailScreen()
+        },
+      ),
     );
   }
 }

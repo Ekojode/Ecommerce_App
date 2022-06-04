@@ -1,7 +1,7 @@
 import 'package:ecommerce_app/models/products.dart';
 
-List<Products> dummyProducts = [
-  Products(
+List<Product> dummyProducts = [
+  Product(
     // isFavourite: false,
     id: 'p1',
     title: 'Red Shirt',
@@ -10,7 +10,7 @@ List<Products> dummyProducts = [
     imageUrl:
         'https://cdn.pixabay.com/photo/2016/10/02/22/17/red-t-shirt-1710578_1280.jpg',
   ),
-  Products(
+  Product(
     id: 'p2',
     title: 'Trousers',
     description: 'A nice pair of trousers.',
@@ -18,29 +18,29 @@ List<Products> dummyProducts = [
     imageUrl:
         'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/Trousers%2C_dress_%28AM_1960.022-8%29.jpg/512px-Trousers%2C_dress_%28AM_1960.022-8%29.jpg',
   ),
-  Products(
+  Product(
     id: 'p3',
     title: 'Yellow Scarf',
     description: 'Warm and cozy - exactly what you need for the winter.',
     price: 19.99,
     imageUrl: 'https://live.staticflickr.com/4043/4438260868_cc79b3369d_z.jpg',
   ),
-  Products(
-    id: 'p3',
-    title: 'Yellow Scarf',
-    description: 'Warm and cozy - exactly what you need for the winter.',
-    price: 19.99,
-    imageUrl: 'https://live.staticflickr.com/4043/4438260868_cc79b3369d_z.jpg',
-  ),
-  Products(
-    id: 'p3',
-    title: 'Yellow Scarf',
-    description: 'Warm and cozy - exactly what you need for the winter.',
-    price: 19.99,
-    imageUrl: 'https://live.staticflickr.com/4043/4438260868_cc79b3369d_z.jpg',
-  ),
-  Products(
+  Product(
     id: 'p4',
+    title: 'Yellow Scarf 2',
+    description: 'Warm and cozy - exactly what you need for the winter.',
+    price: 19.99,
+    imageUrl: 'https://live.staticflickr.com/4043/4438260868_cc79b3369d_z.jpg',
+  ),
+  Product(
+    id: 'p5',
+    title: 'Yellow Scarf 3',
+    description: 'Warm and cozy - exactly what you need for the winter.',
+    price: 19.99,
+    imageUrl: 'https://live.staticflickr.com/4043/4438260868_cc79b3369d_z.jpg',
+  ),
+  Product(
+    id: 'p6',
     title: 'A Pan',
     description: 'Prepare any meal you want.',
     price: 49.99,
