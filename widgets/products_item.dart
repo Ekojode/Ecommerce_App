@@ -33,28 +33,28 @@ class _ProductItemState extends State<ProductItem> {
   //bool _isTapped = false;
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () {
-        Navigator.pushNamed(context, ProduuctsDetailScreen.routeName,
-            arguments: id);
-      },
-      child: GridTile(
-        /*  header: GridTileBar(
-            //s  backgroundColor: Colors.red,
-            trailing: IconButton(
-        //  onPressed: onPressed,
-          icon: Icon(
-            Icons.favorite,
-            color: isTapped ? Colors.red : Colors.white,
-          ),
-        )),*/
-        footer: GridTileBar(
-            backgroundColor: Colors.black54,
-            title: Text(title),
-            subtitle: Text("₦ ${price.toString()}"),
-            trailing: const Icon(
-              Icons.favorite_outline,
-            )),
+    return GridTile(
+      /*  header: GridTileBar(
+          //s  backgroundColor: Colors.red,
+          trailing: IconButton(
+      //  onPressed: onPressed,
+        icon: Icon(
+          Icons.favorite,
+          color: isTapped ? Colors.red : Colors.white,
+        ),
+      )),*/
+      footer: GridTileBar(
+          backgroundColor: Colors.black54,
+          title: Text(title),
+          subtitle: Text("₦ ${price.toString()}"),
+          trailing: const Icon(
+            Icons.favorite_outline,
+          )),
+      child: GestureDetector(
+        onTap: () {
+          Navigator.pushNamed(context, ProduuctsDetailScreen.routeName,
+              arguments: id);
+        },
         child: ClipRRect(
           borderRadius: const BorderRadius.only(
               bottomLeft: Radius.circular(15),
