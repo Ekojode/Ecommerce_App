@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../models/products.dart';
 
-class Products extends ChangeNotifier {
+class ProviderProducts with ChangeNotifier {
   final List<Product> _items = [
     Product(
       // isFavourite: false,

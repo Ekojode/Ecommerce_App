@@ -15,8 +15,8 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Provider<Products>(
-      create: (BuildContext context) => Products(),
+    return ChangeNotifierProvider(
+      create: (context) => ProviderProducts(),
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(scaffoldBackgroundColor: const Color(0xfff9f9f9)),
