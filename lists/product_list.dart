@@ -1,4 +1,4 @@
-import 'package:ecommerce_app/models/products.dart';
+import 'package:ecommerce_app/providers/products.dart';
 
 List<Product> dummyProducts = [
   Product(
