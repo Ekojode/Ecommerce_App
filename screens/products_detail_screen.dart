@@ -3,6 +3,8 @@ import 'package:ecommerce_app/widgets/product_suggest.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../providers/products.dart';
+
 class ProduuctsDetailScreen extends StatelessWidget {
   //final String title;
   const ProduuctsDetailScreen({
@@ -14,7 +16,11 @@ class ProduuctsDetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final productId = ModalRoute.of(context)!.settings.arguments as String;
-    final suggestedProducts = Provider.of<ProviderProducts>(context).items;
+    final suggestedProducts = Provider.of<ProviderProducts>(context)
+        .items
+        .where((element) => element.id != productId)
+        .toList();
+
     final loadedProduct = Provider.of<ProviderProducts>(context, listen: false)
         .findById(productId);
     double screenHeight = MediaQuery.of(context).size.height -
