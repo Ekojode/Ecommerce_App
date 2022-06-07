@@ -63,6 +63,11 @@ class ProviderProducts with ChangeNotifier {
     return items.firstWhere((element) => element.id == id);
   }
 
+  List<Product> suggestProducts(String id) {
+    items.removeWhere((element) => element.id == id);
+    return items;
+  }
+
   void addItem() {
     notifyListeners();
   }
