@@ -16,16 +16,23 @@ class ProductItem extends StatelessWidget {
         title: Text(product.title),
         subtitle: Text("₦ ${product.price.toString()}"),
         trailing: IconButton(
-          onPressed: //VoidCallback,
-              () {
+          onPressed: () {
             product.toggleFavourites();
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(
+                  product.isFavourite
+                      ? "${product.title} added to favourites"
+                      : "${product.title} removed from favourites",
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            );
           },
-          icon: product.isFavourite
-              ? const Icon(
-                  Icons.favorite,
-                  color: Colors.red,
-                )
-              : const Icon(Icons.favorite_outline),
+          icon: Icon(
+            product.isFavourite ? Icons.favorite : Icons.favorite_outline,
+            color: product.isFavourite ? Colors.red : null,
+          ),
         ),
       ),
       child: GestureDetector(

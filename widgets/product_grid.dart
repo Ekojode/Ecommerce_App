@@ -11,7 +11,7 @@ class ProductGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final productsData = Provider.of<ProviderProducts>(context);
+    final productsData = Provider.of<ProviderProducts>(context, listen: false);
     final products = productsData.items;
     return Container(
       margin: const EdgeInsets.all(10),
