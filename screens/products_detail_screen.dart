@@ -3,7 +3,7 @@ import 'package:ecommerce_app/widgets/product_suggest.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../providers/products.dart';
+
 
 class ProduuctsDetailScreen extends StatelessWidget {
   //final String title;

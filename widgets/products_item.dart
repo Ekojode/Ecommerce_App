@@ -1,9 +1,14 @@
 //import 'package:ecommerce_app/models/products.dart';
 import 'package:ecommerce_app/screens/products_detail_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../providers/products.dart';
 
 class ProductItem extends StatelessWidget {
-  final String imgUrl;
+  const ProductItem({Key? key}) : super(key: key);
+
+/*  final String imgUrl;
   final String title;
   final double price;
   final bool isTapped;
@@ -17,7 +22,7 @@ class ProductItem extends StatelessWidget {
       required this.isTapped,
       //  required this.onPressed,
       required this.id})
-      : super(key: key);
+      : super(key: key);*/
 
 /*  @override
   State<ProductItem> createState() => _ProductItemState();
@@ -33,6 +38,7 @@ class _ProductItemState extends State<ProductItem> {
   //bool _isTapped = false;
   @override
   Widget build(BuildContext context) {
+    final product = Provider.of<Product>(context);
     return GridTile(
       /*  header: GridTileBar(
           //s  backgroundColor: Colors.red,
@@ -44,16 +50,21 @@ class _ProductItemState extends State<ProductItem> {
         ),
       )),*/
       footer: GridTileBar(
-          backgroundColor: Colors.black54,
-          title: Text(title),
-          subtitle: Text("₦ ${price.toString()}"),
-          trailing: const Icon(
-            Icons.favorite_outline,
-          )),
+        backgroundColor: Colors.black54,
+        title: Text(product.title),
+        subtitle: Text("₦ ${product.price.toString()}"),
+        trailing: IconButton(
+          onPressed: () {
+            product.toggleFavourites();
+          },
+          icon: Icon(
+              product.isFavourite ? Icons.favorite : Icons.favorite_border),
+        ),
+      ),
       child: GestureDetector(
         onTap: () {
           Navigator.pushNamed(context, ProduuctsDetailScreen.routeName,
-              arguments: id);
+              arguments: product.id);
         },
         child: ClipRRect(
           borderRadius: const BorderRadius.only(
@@ -62,7 +73,7 @@ class _ProductItemState extends State<ProductItem> {
               topLeft: Radius.circular(15),
               topRight: Radius.circular(15)),
           child: Image.network(
-            imgUrl,
+            product.imageUrl,
             fit: BoxFit.cover,
           ),
         ),
