@@ -3,7 +3,6 @@ import 'package:ecommerce_app/screens/products_detail_screen.dart';
 import "package:flutter/material.dart";
 import 'package:provider/provider.dart';
 
-//import './screens/home_screen.dart';
 import './screens/products_overview_screen.dart';
 
 void main() {

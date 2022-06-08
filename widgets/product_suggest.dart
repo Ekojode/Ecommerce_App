@@ -16,17 +16,27 @@ class ProductSuggest extends StatelessWidget {
     return Container(
       height: screenHeight * 0.25,
       width: widthSize * 0.4,
-      decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
-      child: Column(children: [
-        SizedBox(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Column(
+        children: [
+          SizedBox(
             height: screenHeight * 0.22,
-            child: Image.network(imgUrl, fit: BoxFit.cover)),
-        Text(
-          productTitle,
-          style: const TextStyle(
-              fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black87),
-        )
-      ]),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(20),
+              child: Image.network(imgUrl, fit: BoxFit.cover),
+            ),
+          ),
+          Text(
+            productTitle,
+            style: const TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: Colors.black87),
+          )
+        ],
+      ),
     );
   }
 }

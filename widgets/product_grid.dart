@@ -25,32 +25,9 @@ class ProductGrid extends StatelessWidget {
             childAspectRatio: 2 / 3,
           ),
           itemBuilder: (BuildContext context, int index) {
-            return ProductItem(
-              imgUrl: products[index].imageUrl,
-              title: products[index].title,
-              price: products[index].price,
-              isTapped: products[index].isFavourite,
-              /*     onPressed: () {
-                dummyProducts[index].isFavourite
-                    ? ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                        content: Text(
-                            "${dummyProducts[index].title} has been removed from favourites"),
-                      ))
-                    : ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                        content: Text(
-                            " ${dummyProducts[index].title} has been added to favourites")));
-                setState(() {
-                  print(_favourites.length + 1);
-                  dummyProducts[index].isFavourite =
-                      !dummyProducts[index].isFavourite;
-                  if (dummyProducts[index].isFavourite == false) {
-                    _favourites.remove(dummyProducts[index]);
-                  } else {
-                    _favourites.add(dummyProducts[index]);
-                  }
-                });
-              },*/
-              id: products[index].id,
+            return ChangeNotifierProvider(
+              create: (context) => products[index],
+              child: const ProductItem(),
             );
           }),
     );

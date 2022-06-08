@@ -3,8 +3,6 @@ import 'package:ecommerce_app/widgets/product_suggest.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-
-
 class ProduuctsDetailScreen extends StatelessWidget {
   //final String title;
   const ProduuctsDetailScreen({
@@ -38,7 +36,9 @@ class ProduuctsDetailScreen extends StatelessWidget {
         centerTitle: true,
         actions: [
           IconButton(
-              onPressed: () {}, icon: const Icon(Icons.shopping_bag_outlined))
+            onPressed: () {},
+            icon: const Icon(Icons.shopping_bag_outlined),
+          ),
         ],
       ),
       body: SafeArea(
@@ -62,17 +62,21 @@ class ProduuctsDetailScreen extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(loadedProduct.title,
-                        style: const TextStyle(
-                            fontSize: 17.0,
-                            fontWeight: FontWeight.w800,
-                            color: Colors.black)),
-                    Text('\$ ${loadedProduct.price}',
-                        style: const TextStyle(
-                          fontSize: 25.0,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
-                        )),
+                    Text(
+                      loadedProduct.title,
+                      style: const TextStyle(
+                          fontSize: 17.0,
+                          fontWeight: FontWeight.w800,
+                          color: Colors.black),
+                    ),
+                    Text(
+                      '\$ ${loadedProduct.price}',
+                      style: const TextStyle(
+                        fontSize: 25.0,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -82,27 +86,32 @@ class ProduuctsDetailScreen extends StatelessWidget {
               SizedBox(
                 height: screenHeight * 0.3,
                 child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    //  shrinkWrap: true,
-                    itemCount: suggestedProducts.length,
-                    itemBuilder: (context, index) => ProductSuggest(
-                        imgUrl: suggestedProducts[index].imageUrl,
-                        productTitle: suggestedProducts[index].title)),
+                  scrollDirection: Axis.horizontal,
+                  //  shrinkWrap: true,
+                  itemCount: suggestedProducts.length,
+                  itemBuilder: (context, index) => ProductSuggest(
+                      imgUrl: suggestedProducts[index].imageUrl,
+                      productTitle: suggestedProducts[index].title),
+                ),
               ),
               Container(
                 margin: const EdgeInsets.symmetric(horizontal: 15.0),
-                child: const Text('Description',
-                    style: TextStyle(
-                        fontSize: 15.0,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.black)),
+                child: const Text(
+                  'Description',
+                  style: TextStyle(
+                      fontSize: 15.0,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.black),
+                ),
               ),
               const SizedBox(height: 15.0),
               Container(
                 margin: const EdgeInsets.symmetric(horizontal: 15.0),
-                child: Text(loadedProduct.description,
-                    style: const TextStyle(
-                        fontSize: 13.0, color: Colors.grey, height: 1.5)),
+                child: Text(
+                  loadedProduct.description,
+                  style: const TextStyle(
+                      fontSize: 13.0, color: Colors.grey, height: 1.5),
+                ),
               ),
               Container(
                 margin: const EdgeInsets.symmetric(horizontal: 15),
@@ -134,44 +143,3 @@ class ProduuctsDetailScreen extends StatelessWidget {
     );
   }
 }
-
-
-/* Container(
-            height: screenHeight * 0.6,
-            decoration: BoxDecoration(
-              color: Colors.purpleAccent.withOpacity(0.3),
-              borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(20),
-                topRight: Radius.circular(20),
-              ),
-            ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 8),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(loadedProduct.title),
-                      Text("\$ ${loadedProduct.price}")
-                    ],
-                  ),
-                ),
-                Text(
-                  loadedProduct.description,
-                  // textAlign: TextAlign.left,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    IconButton(
-                        onPressed: () {}, icon: const Icon(Icons.favorite)),
-                    ElevatedButton(
-                        onPressed: () {}, child: const Text("Add to Cart"))
-                  ],
-                )
-              ],
-            ),
-          )*/

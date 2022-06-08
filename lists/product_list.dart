@@ -2,7 +2,6 @@ import 'package:ecommerce_app/providers/products.dart';
 
 List<Product> dummyProducts = [
   Product(
-    // isFavourite: false,
     id: 'p1',
     title: 'Red Shirt',
     description: 'A red shirt - it is pretty red!',
