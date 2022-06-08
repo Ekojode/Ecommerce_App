@@ -20,8 +20,12 @@ class ProductItem extends StatelessWidget {
               () {
             product.toggleFavourites();
           },
-          icon: Icon(
-              product.isFavourite ? Icons.favorite : Icons.favorite_border),
+          icon: product.isFavourite
+              ? const Icon(
+                  Icons.favorite,
+                  color: Colors.red,
+                )
+              : const Icon(Icons.favorite_outline),
         ),
       ),
       child: GestureDetector(
