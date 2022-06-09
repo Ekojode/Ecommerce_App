@@ -20,6 +20,7 @@ class ProductItem extends StatelessWidget {
             product.toggleFavourites();
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
+                duration: const Duration(milliseconds: 800),
                 content: Text(
                   product.isFavourite
                       ? "${product.title} added to favourites"
