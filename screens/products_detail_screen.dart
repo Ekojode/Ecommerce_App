@@ -19,8 +19,9 @@ class ProduuctsDetailScreen extends StatelessWidget {
         .where((element) => element.id != productId)
         .toList();
 
-    final loadedProduct = Provider.of<ProviderProducts>(context, listen: false)
-        .findById(productId);
+    final loadedProduct = Provider.of<ProviderProducts>(
+      context,
+    ).findById(productId);
     double screenHeight = MediaQuery.of(context).size.height -
         MediaQuery.of(context).padding.top -
         AppBar().preferredSize.height;
@@ -122,7 +123,12 @@ class ProduuctsDetailScreen extends StatelessWidget {
                       flex: 1,
                       child: IconButton(
                         onPressed: () {},
-                        icon: const Icon(Icons.favorite_border_outlined),
+                        icon: Icon(
+                          Icons.favorite_outlined,
+                          color: loadedProduct.isFavourite
+                              ? Colors.red
+                              : Colors.grey,
+                        ),
                       ),
                     ),
                     Expanded(

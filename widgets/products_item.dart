@@ -12,30 +12,31 @@ class ProductItem extends StatelessWidget {
     final product = Provider.of<Product>(context);
     return GridTile(
       footer: GridTileBar(
-        backgroundColor: Colors.black54,
-        title: Text(product.title),
-        subtitle: Text("₦ ${product.price.toString()}"),
-        trailing: IconButton(
-          onPressed: () {
-            product.toggleFavourites();
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                duration: const Duration(milliseconds: 800),
-                content: Text(
-                  product.isFavourite
-                      ? "${product.title} added to favourites"
-                      : "${product.title} removed from favourites",
-                  textAlign: TextAlign.center,
+          backgroundColor: Colors.black54,
+          leading: IconButton(
+            onPressed: () {
+              product.toggleFavourites();
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  duration: const Duration(milliseconds: 800),
+                  content: Text(
+                    product.isFavourite
+                        ? "${product.title} added to favourites"
+                        : "${product.title} removed from favourites",
+                    textAlign: TextAlign.center,
+                  ),
                 ),
-              ),
-            );
-          },
-          icon: Icon(
-            product.isFavourite ? Icons.favorite : Icons.favorite_outline,
-            color: product.isFavourite ? Colors.red : null,
+              );
+            },
+            icon: Icon(
+              product.isFavourite ? Icons.favorite : Icons.favorite_outline,
+              color: product.isFavourite ? Colors.red : null,
+            ),
           ),
-        ),
-      ),
+          title: Text(product.title),
+          subtitle: Text("₦ ${product.price.toString()}"),
+          trailing: IconButton(
+              onPressed: () {}, icon: const Icon(Icons.shopping_bag))),
       child: GestureDetector(
         onTap: () {
           Navigator.pushNamed(context, ProduuctsDetailScreen.routeName,
