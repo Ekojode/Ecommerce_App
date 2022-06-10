@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 class CartItemList extends StatelessWidget {
   final String id;
+  final String cartId;
   final String title;
   final double price;
   final int quantity;
@@ -10,7 +11,8 @@ class CartItemList extends StatelessWidget {
       required this.title,
       required this.price,
       required this.quantity,
-      required this.id})
+      required this.id,
+      required this.cartId})
       : super(key: key);
 
   @override
@@ -22,7 +24,7 @@ class CartItemList extends StatelessWidget {
           subtitle: Text(price.toStringAsFixed(2)),
           trailing: Column(
             children: [
-              Text("Total: ${price * quantity}"),
+              Text("Total: ${price * quantity} $id"),
               Text(quantity.toString())
             ],
           ),
