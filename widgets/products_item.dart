@@ -12,7 +12,7 @@ class ProductItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final product = Provider.of<Product>(context);
     final cart = Provider.of<Cart>(context);
-    final cartItems = Provider.of<Cart>(context).cartItems;
+    //  final cartItems = Provider.of<Cart>(context).cartItems;
     return GridTile(
       footer: GridTileBar(
         backgroundColor: Colors.black54,
@@ -41,7 +41,7 @@ class ProductItem extends StatelessWidget {
         trailing: IconButton(
           onPressed: () {
             cart.addItem(product.id, product.price, product.title);
-            print(cartItems);
+            // print(cartItems);
           },
           icon: const Icon(Icons.shopping_bag),
         ),
