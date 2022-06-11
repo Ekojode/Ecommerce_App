@@ -1,5 +1,6 @@
 import 'package:ecommerce_app/screens/cart_screen.dart';
 import 'package:ecommerce_app/widgets/badge.dart';
+import 'package:ecommerce_app/widgets/category_grid.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -56,8 +57,22 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
                   ]),
         ],
       ),
-      body: ProductGrid(
-        showFavs: showFavs,
+      body: Column(
+        children: [
+          const SizedBox(
+            height: 60,
+            child: MyWidget(),
+          ),
+          Expanded(
+            child: ProductGrid(
+              showFavs: showFavs,
+            ),
+          ),
+          const SizedBox(
+            height: 60,
+            child: MyWidget(),
+          ),
+        ],
       ),
       drawer: const Drawer(
           child: DrawerHeader(child: Text("This is a Drawer Head"))),
