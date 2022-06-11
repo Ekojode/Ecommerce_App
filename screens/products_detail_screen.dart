@@ -3,6 +3,10 @@ import 'package:ecommerce_app/widgets/product_suggest.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../providers/cart_provider.dart';
+import '../widgets/badge.dart';
+import 'cart_screen.dart';
+
 class ProduuctsDetailScreen extends StatelessWidget {
   //final String title;
   const ProduuctsDetailScreen({
@@ -22,10 +26,13 @@ class ProduuctsDetailScreen extends StatelessWidget {
     final loadedProduct = Provider.of<ProviderProducts>(
       context,
     ).findById(productId);
+    final cart = Provider.of<Cart>(context);
     double screenHeight = MediaQuery.of(context).size.height -
         MediaQuery.of(context).padding.top -
         AppBar().preferredSize.height;
     double widthSize = MediaQuery.of(context).size.width;
+
+    final cartTotal = cart.quantity;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white70,
@@ -36,10 +43,15 @@ class ProduuctsDetailScreen extends StatelessWidget {
             )),
         centerTitle: true,
         actions: [
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.shopping_bag_outlined),
-          ),
+          Badge(
+              value: cartTotal.toString(),
+              color: Colors.blue,
+              child: IconButton(
+                icon: const Icon(Icons.shopping_bag),
+                onPressed: () {
+                  Navigator.pushNamed(context, CartScreen.routeName);
+                },
+              )),
         ],
       ),
       body: SafeArea(
@@ -85,7 +97,7 @@ class ProduuctsDetailScreen extends StatelessWidget {
                 height: screenHeight * 0.05,
               ),
               SizedBox(
-                height: screenHeight * 0.3,
+                height: screenHeight * 0.28,
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
                   //  shrinkWrap: true,
@@ -140,7 +152,17 @@ class ProduuctsDetailScreen extends StatelessWidget {
                     Expanded(
                         flex: 3,
                         child: ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            cart.addItem(loadedProduct.id, loadedProduct.price,
+                                loadedProduct.title);
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                duration: const Duration(milliseconds: 800),
+                                content: Text(
+                                    "${loadedProduct.title} has been added Cart"),
+                              ),
+                            );
+                          },
                           style: ElevatedButton.styleFrom(
                               primary: Colors.black, onPrimary: Colors.white),
                           child: const Text("Add to Cart"),

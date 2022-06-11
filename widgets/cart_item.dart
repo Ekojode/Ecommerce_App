@@ -20,14 +20,14 @@ class CartItemList extends StatelessWidget {
     return Card(
         margin: const EdgeInsets.all(10),
         child: ListTile(
-          title: Text(title),
-          subtitle: Text(price.toStringAsFixed(2)),
-          trailing: Column(
-            children: [
-              Text("Total: ${price * quantity} $id"),
-              Text(quantity.toString())
-            ],
+          leading: CircleAvatar(
+            child: Padding(
+                padding: const EdgeInsets.all(5),
+                child: Text("\$ ${price.toStringAsFixed(2)}")),
           ),
+          title: Text(title),
+          subtitle: Text("${price * quantity}"),
+          trailing: Text(quantity.toString()),
         ));
   }
 }
