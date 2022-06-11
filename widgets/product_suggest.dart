@@ -3,8 +3,12 @@ import 'package:flutter/material.dart';
 class ProductSuggest extends StatelessWidget {
   final String imgUrl;
   final String productTitle;
+  final VoidCallback onPressed;
   const ProductSuggest(
-      {Key? key, required this.imgUrl, required this.productTitle})
+      {Key? key,
+      required this.imgUrl,
+      required this.productTitle,
+      required this.onPressed})
       : super(key: key);
 
   @override
@@ -25,7 +29,9 @@ class ProductSuggest extends StatelessWidget {
             height: screenHeight * 0.22,
             child: ClipRRect(
               borderRadius: BorderRadius.circular(20),
-              child: Image.network(imgUrl, fit: BoxFit.cover),
+              child: GestureDetector(
+                  onTap: onPressed,
+                  child: Image.network(imgUrl, fit: BoxFit.cover)),
             ),
           ),
           Text(

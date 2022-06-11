@@ -68,10 +68,6 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
               showFavs: showFavs,
             ),
           ),
-          const SizedBox(
-            height: 60,
-            child: MyWidget(),
-          ),
         ],
       ),
       drawer: const Drawer(

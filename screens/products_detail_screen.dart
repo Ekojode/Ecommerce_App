@@ -91,8 +91,14 @@ class ProduuctsDetailScreen extends StatelessWidget {
                   //  shrinkWrap: true,
                   itemCount: suggestedProducts.length,
                   itemBuilder: (context, index) => ProductSuggest(
-                      imgUrl: suggestedProducts[index].imageUrl,
-                      productTitle: suggestedProducts[index].title),
+                    imgUrl: suggestedProducts[index].imageUrl,
+                    productTitle: suggestedProducts[index].title,
+                    onPressed: () {
+                      Navigator.of(context).pushNamed(
+                          ProduuctsDetailScreen.routeName,
+                          arguments: suggestedProducts[index].id);
+                    },
+                  ),
                 ),
               ),
               Container(
