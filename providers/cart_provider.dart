@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class CartItem {
   final String title;
@@ -15,7 +15,7 @@ class CartItem {
 }
 
 class Cart with ChangeNotifier {
-  final Map<String, CartItem> _cartItems = {};
+  Map<String, CartItem> _cartItems = {};
 
   Map<String, CartItem> get cartItems {
     return {..._cartItems};
@@ -23,14 +23,6 @@ class Cart with ChangeNotifier {
 
   void addItem(String productId, double price, String title) {
     if (_cartItems.containsKey(productId)) {
-      _cartItems.update(
-        productId,
-        (existingCartItem) => CartItem(
-            title: existingCartItem.title,
-            price: existingCartItem.price,
-            quantity: existingCartItem.quantity + 1,
-            id: existingCartItem.id),
-      );
     } else {
       _cartItems.putIfAbsent(
         productId,
@@ -41,6 +33,34 @@ class Cart with ChangeNotifier {
           id: DateTime.now().toString(),
         ),
       );
+    }
+    notifyListeners();
+  }
+
+  void cartItemIncrement(String productId) {
+    if (_cartItems.containsKey(productId)) {
+      _cartItems.update(
+          productId,
+          (existingCartItem) => CartItem(
+                id: existingCartItem.id,
+                title: existingCartItem.title,
+                price: existingCartItem.price,
+                quantity: existingCartItem.quantity + 1,
+              ));
+    }
+    notifyListeners();
+  }
+
+  void cartItemDecrement(String productId) {
+    if (_cartItems.containsKey(productId)) {
+      _cartItems.update(
+          productId,
+          (existingCartItem) => CartItem(
+                id: existingCartItem.id,
+                title: existingCartItem.title,
+                price: existingCartItem.price,
+                quantity: existingCartItem.quantity - 1,
+              ));
     }
     notifyListeners();
   }
@@ -59,6 +79,11 @@ class Cart with ChangeNotifier {
 
   void removeCartItem(String productId) {
     _cartItems.removeWhere((key, value) => value.id == productId);
+    notifyListeners();
+  }
+
+  void clearCart() {
+    _cartItems = {};
     notifyListeners();
   }
 }

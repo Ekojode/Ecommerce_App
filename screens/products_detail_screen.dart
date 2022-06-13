@@ -27,6 +27,7 @@ class ProduuctsDetailScreen extends StatelessWidget {
       context,
     ).findById(productId);
     final cart = Provider.of<Cart>(context);
+    final cartItem = cart.cartItems;
     double screenHeight = MediaQuery.of(context).size.height -
         MediaQuery.of(context).padding.top -
         AppBar().preferredSize.height;
@@ -159,7 +160,10 @@ class ProduuctsDetailScreen extends StatelessWidget {
                               SnackBar(
                                 duration: const Duration(milliseconds: 800),
                                 content: Text(
-                                    "${loadedProduct.title} has been added Cart"),
+                                  cartItem.containsKey(loadedProduct.id)
+                                      ? "${loadedProduct.title} is already in cart"
+                                      : "${loadedProduct.title} has been added to cart",
+                                ),
                               ),
                             );
                           },

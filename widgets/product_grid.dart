@@ -19,6 +19,7 @@ class ProductGrid extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.all(10),
       child: GridView.builder(
+          //  scrollDirection: Axis.horizontal,
           physics: const BouncingScrollPhysics(),
           itemCount: products.length,
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(

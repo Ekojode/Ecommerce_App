@@ -12,6 +12,7 @@ class ProductItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final product = Provider.of<Product>(context);
     final cart = Provider.of<Cart>(context);
+    final cartItems = cart.cartItems;
     //  final cartItems = Provider.of<Cart>(context).cartItems;
     return GridTile(
       footer: GridTileBar(
@@ -41,7 +42,17 @@ class ProductItem extends StatelessWidget {
         trailing: IconButton(
           onPressed: () {
             cart.addItem(product.id, product.price, product.title);
-            // print(cartItems);
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                duration: const Duration(milliseconds: 800),
+                content: Text(
+                  cartItems.containsKey(product.id)
+                      ? "${product.title} is already in cart"
+                      : "${product.title} has been added to cart",
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            );
           },
           icon: const Icon(Icons.shopping_bag),
         ),

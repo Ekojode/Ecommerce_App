@@ -26,6 +26,7 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
         title: const Text("Kide Commerce"),
         centerTitle: true,
         actions: [
+          const Icon(Icons.search_sharp),
           Badge(
               value: cartTotal.toString(),
               color: Colors.blue,
@@ -58,10 +59,13 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
         ],
       ),
       body: Column(
+        // mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          const Text("Find your style!"),
           const SizedBox(
             height: 60,
-            child: MyWidget(),
+            child: CategoryGrid(),
           ),
           Expanded(
             child: ProductGrid(
