@@ -42,7 +42,7 @@ class CartItemList extends StatelessWidget {
                   onPressed: increaseCartItem, icon: const Icon(Icons.add)),
             ],
           ),
-          trailing: Text("${price * quantity}"),
+          trailing: Text((price * quantity).toStringAsFixed(2)),
         ));
   }
 }

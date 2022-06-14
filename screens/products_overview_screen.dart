@@ -1,6 +1,7 @@
 import 'package:ecommerce_app/screens/cart_screen.dart';
 import 'package:ecommerce_app/widgets/badge.dart';
 import 'package:ecommerce_app/widgets/category_grid.dart';
+import 'package:ecommerce_app/widgets/drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -74,8 +75,7 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
           ),
         ],
       ),
-      drawer: const Drawer(
-          child: DrawerHeader(child: Text("This is a Drawer Head"))),
+      drawer: const AppDrawer(),
     );
   }
 }
