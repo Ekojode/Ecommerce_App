@@ -1,5 +1,7 @@
+import 'package:ecommerce_app/screens/order_screen.dart';
 import 'package:ecommerce_app/widgets/cart_item.dart';
 import 'package:provider/provider.dart';
+import '../providers/orders.dart';
 
 import 'package:flutter/material.dart';
 
@@ -15,6 +17,8 @@ class CartScreen extends StatelessWidget {
     final cart = Provider.of<Cart>(context);
 
     final cartList = cart.cartItems;
+
+    final order = Provider.of<Orders>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
         title: const Text("Cart"),
@@ -96,7 +100,13 @@ class CartScreen extends StatelessWidget {
                         label: Text("\$${cart.totalPrice.toStringAsFixed(2)}"),
                       ),
                       TextButton(
-                          onPressed: () {}, child: const Text("Order Now"))
+                          onPressed: () {
+                            Navigator.pushNamed(context, OrderScreen.routeName);
+                            order.addOrder(
+                                cartList.values.toList(), cart.totalPrice);
+                            cart.clearCart();
+                          },
+                          child: const Text("Order Now"))
                     ],
                   ),
                 )
