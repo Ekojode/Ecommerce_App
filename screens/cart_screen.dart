@@ -58,10 +58,10 @@ class CartScreen extends StatelessWidget {
                                 label: "UNDO",
                                 onPressed: () {
                                   cart.addItem(
-                                    cartList.keys.toList()[index],
-                                    cartList.values.toList()[index].price,
-                                    cartList.values.toList()[index].title,
-                                  );
+                                      cartList.keys.toList()[index],
+                                      cartList.values.toList()[index].price,
+                                      cartList.values.toList()[index].title,
+                                      cartList.values.toList()[index].imgUrl);
                                 },
                               ),
                               duration: const Duration(milliseconds: 800),
@@ -93,6 +93,7 @@ class CartScreen extends StatelessWidget {
                             cart.cartItemIncrement(
                                 cartList.keys.toList()[index]);
                           },
+                          imgUrl: cartList.values.toList()[index].imgUrl,
                         ),
                       );
                     },

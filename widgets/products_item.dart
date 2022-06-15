@@ -13,7 +13,7 @@ class ProductItem extends StatelessWidget {
     final product = Provider.of<Product>(context);
     final cart = Provider.of<Cart>(context);
     final cartItems = cart.cartItems;
-    //  final cartItems = Provider.of<Cart>(context).cartItems;
+
     return GridTile(
       footer: GridTileBar(
         backgroundColor: Colors.black54,
@@ -41,7 +41,8 @@ class ProductItem extends StatelessWidget {
         subtitle: Text("₦ ${product.price.toString()}"),
         trailing: IconButton(
           onPressed: () {
-            cart.addItem(product.id, product.price, product.title);
+            cart.addItem(
+                product.id, product.price, product.title, product.imageUrl);
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 duration: const Duration(milliseconds: 800),

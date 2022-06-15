@@ -6,6 +6,7 @@ class CartItemList extends StatelessWidget {
   final String title;
   final double price;
   final int quantity;
+  final String imgUrl;
   final VoidCallback increaseCartItem;
   final VoidCallback decreaseCartItem;
   const CartItemList(
@@ -16,19 +17,26 @@ class CartItemList extends StatelessWidget {
       required this.id,
       required this.cartId,
       required this.increaseCartItem,
-      required this.decreaseCartItem})
+      required this.decreaseCartItem,
+      required this.imgUrl})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    double screenHeight = MediaQuery.of(context).size.height -
+        MediaQuery.of(context).padding.top -
+        AppBar().preferredSize.height;
+    double widthSize = MediaQuery.of(context).size.width;
     return Card(
         margin: const EdgeInsets.all(10),
         child: ListTile(
-          leading: CircleAvatar(
-            child: Padding(
-              padding: const EdgeInsets.all(5),
-              child: FittedBox(
-                child: Text("\$ ${price.toStringAsFixed(2)}"),
+          leading: SizedBox(
+            height: screenHeight * 0.2,
+            width: widthSize * 0.35,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(20),
+              child: Image.network(
+                imgUrl,
               ),
             ),
           ),

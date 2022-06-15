@@ -106,7 +106,6 @@ class ProduuctsDetailScreen extends StatelessWidget {
                 height: screenHeight * 0.28,
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
-                  //  shrinkWrap: true,
                   itemCount: suggestedProducts.length,
                   itemBuilder: (context, index) => ProductSuggest(
                     imgUrl: suggestedProducts[index].imageUrl,
@@ -160,7 +159,7 @@ class ProduuctsDetailScreen extends StatelessWidget {
                         child: ElevatedButton(
                           onPressed: () {
                             cart.addItem(loadedProduct.id, loadedProduct.price,
-                                loadedProduct.title);
+                                loadedProduct.title, loadedProduct.imageUrl);
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
                                 action: SnackBarAction(
