@@ -44,15 +44,26 @@ class CartScreen extends StatelessWidget {
                   child: ListView.builder(
                     itemCount: cartList.length,
                     itemBuilder: (context, index) {
-                      final item = cartList.keys.toList()[index];
+                      final item = cartList.values.toList()[index].id;
                       return Dismissible(
                         direction: DismissDirection.endToStart,
                         key: Key(item),
                         onDismissed: (direction) {
                           cart.removeCartItem(
                               cartList.values.toList()[index].id);
+                          ScaffoldMessenger.of(context).hideCurrentSnackBar();
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
+                              action: SnackBarAction(
+                                label: "UNDO",
+                                onPressed: () {
+                                  cart.addItem(
+                                    cartList.keys.toList()[index],
+                                    cartList.values.toList()[index].price,
+                                    cartList.values.toList()[index].title,
+                                  );
+                                },
+                              ),
                               duration: const Duration(milliseconds: 800),
                               content: Text(
                                   "${cartList.values.toList()[index].title} has been removed from Cart"),

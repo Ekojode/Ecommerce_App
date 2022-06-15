@@ -61,7 +61,6 @@ class ProduuctsDetailScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(
-                  // margin: const EdgeInsets.all(8),
                   width: widthSize,
                   height: screenHeight * 0.4,
                   child: Image.network(
@@ -158,6 +157,12 @@ class ProduuctsDetailScreen extends StatelessWidget {
                                 loadedProduct.title);
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
+                                action: SnackBarAction(
+                                  label: "UNDO",
+                                  onPressed: () {
+                                    cart.removeItem(loadedProduct.id);
+                                  },
+                                ),
                                 duration: const Duration(milliseconds: 800),
                                 content: Text(
                                   cartItem.containsKey(loadedProduct.id)
