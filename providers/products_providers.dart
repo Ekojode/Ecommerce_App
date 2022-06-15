@@ -7,11 +7,11 @@ class ProviderProducts with ChangeNotifier {
     Product(
       // isFavourite: false,
       id: 'p1',
-      title: 'Red Shirt',
-      description: 'A red shirt - it is pretty red!',
+      title: 'Yellow Track Pants',
+      description: 'A pretty yellow track pant',
       price: 29.99,
       imageUrl:
-          'https://cdn.pixabay.com/photo/2016/10/02/22/17/red-t-shirt-1710578_1280.jpg',
+          'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8ZmFzaGlvbiUyMG1vZGVsfGVufDB8fDB8fA%3D%3D&w=1000&q=80',
     ),
     Product(
       id: 'p2',
@@ -31,27 +31,28 @@ class ProviderProducts with ChangeNotifier {
     ),
     Product(
       id: 'p4',
-      title: 'Yellow Scarf 2',
-      description: 'Warm and cozy - exactly what you need for the winter.',
+      title: 'White Suit',
+      description: 'Beautiful black man in a pretty white suit!',
       price: 19.99,
       imageUrl:
-          'https://live.staticflickr.com/4043/4438260868_cc79b3369d_z.jpg',
+          'https://media.gq.com/photos/5fe121c69d8a32220e87a1c9/16:9/w_2560%2Cc_limit/story%2520dnc%2520GQ030119NYCFashion_19.jpg',
     ),
     Product(
       id: 'p5',
-      title: 'Yellow Scarf 3',
-      description: 'Warm and cozy - exactly what you need for the winter.',
+      title: 'African Attire',
+      description:
+          'Beautiful african attire made for everyone and best worn in the sahara',
       price: 19.99,
       imageUrl:
-          'https://live.staticflickr.com/4043/4438260868_cc79b3369d_z.jpg',
+          'https://i.guim.co.uk/img/media/e193f0cc579ba041293d4616fd9929db9e2b62e8/0_889_5480_3288/master/5480.jpg?width=1200&height=1200&quality=85&auto=format&fit=crop&s=6d7119b1ad116474de802bbdeda1c35b',
     ),
     Product(
       id: 'p6',
-      title: 'A Pan',
-      description: 'Prepare any meal you want.',
+      title: 'Red Suit',
+      description: 'Beautiful red suit with high quality.',
       price: 49.99,
       imageUrl:
-          'https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Cast-Iron-Pan.jpg/1024px-Cast-Iron-Pan.jpg',
+          'https://img.freepik.com/free-photo/fashion-portrait-young-elegant-woman_1328-2712.jpg?w=360',
     ),
   ];
 

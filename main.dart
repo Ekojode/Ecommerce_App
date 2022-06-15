@@ -1,3 +1,4 @@
+import 'package:ecommerce_app/providers/category.dart';
 import 'package:ecommerce_app/providers/orders.dart';
 import 'package:ecommerce_app/providers/products_providers.dart';
 import 'package:ecommerce_app/screens/cart_screen.dart';
@@ -23,12 +24,17 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<ProviderProducts>(
             create: (_) => ProviderProducts()),
         ChangeNotifierProvider<Cart>(create: (_) => Cart()),
-        ChangeNotifierProvider<Orders>(create: (_) => Orders())
+        ChangeNotifierProvider<Orders>(create: (_) => Orders()),
       ],
       builder: (context, child) {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
-          theme: ThemeData(scaffoldBackgroundColor: const Color(0xfff9f9f9)),
+          theme: ThemeData(
+            scaffoldBackgroundColor: const Color(0xfff9f9f9),
+            appBarTheme: const AppBarTheme(
+                backgroundColor: Color(0xfff9f9f9),
+                foregroundColor: Colors.black),
+          ),
           home: const ProductsOverviewScreen(),
           routes: {
             ProduuctsDetailScreen.routeName: (context) =>

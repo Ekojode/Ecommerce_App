@@ -1,3 +1,4 @@
+import 'package:ecommerce_app/widgets/new_products_item.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -19,20 +20,18 @@ class ProductGrid extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.all(10),
       child: GridView.builder(
-          //  scrollDirection: Axis.horizontal,
           physics: const BouncingScrollPhysics(),
           itemCount: products.length,
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            mainAxisSpacing: 10,
+            mainAxisSpacing: 4,
             crossAxisCount: 2,
             crossAxisSpacing: 10,
             childAspectRatio: 2 / 3,
           ),
           itemBuilder: (BuildContext context, int index) {
             return ChangeNotifierProvider.value(
-              // create: (context) => products[index],
               value: products[index],
-              child: const ProductItem(),
+              child: const NewProductItem(),
             );
           }),
     );

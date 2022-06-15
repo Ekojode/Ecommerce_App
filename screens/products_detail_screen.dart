@@ -45,14 +45,15 @@ class ProduuctsDetailScreen extends StatelessWidget {
         centerTitle: true,
         actions: [
           Badge(
-              value: cartTotal.toString(),
-              color: Colors.blue,
-              child: IconButton(
-                icon: const Icon(Icons.shopping_bag),
-                onPressed: () {
-                  Navigator.pushNamed(context, CartScreen.routeName);
-                },
-              )),
+            value: cartTotal.toString(),
+            color: Colors.amber,
+            child: IconButton(
+              icon: const Icon(Icons.shopping_bag),
+              onPressed: () {
+                Navigator.pushNamed(context, CartScreen.routeName);
+              },
+            ),
+          ),
         ],
       ),
       body: SafeArea(
@@ -60,12 +61,17 @@ class ProduuctsDetailScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(
+              Container(
+                  margin: const EdgeInsets.all(4),
                   width: widthSize,
                   height: screenHeight * 0.4,
-                  child: Image.network(
-                    loadedProduct.imageUrl,
-                    fit: BoxFit.cover,
+                  decoration:
+                      BoxDecoration(borderRadius: BorderRadius.circular(15)),
+                  child: ClipRRect(
+                    child: Image.network(
+                      loadedProduct.imageUrl,
+                      fit: BoxFit.cover,
+                    ),
                   )),
               SizedBox(
                 height: screenHeight * 0.05,

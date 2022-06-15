@@ -23,14 +23,10 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
     final cartTotal = cart.quantity;
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color(0xffe7e4e3),
-        title: const Text("Kide Commerce"),
-        centerTitle: true,
         actions: [
-          const Icon(Icons.search_sharp),
           Badge(
               value: cartTotal.toString(),
-              color: Colors.blue,
+              color: Colors.amber,
               child: IconButton(
                 icon: const Icon(Icons.shopping_bag),
                 onPressed: () {
@@ -60,10 +56,35 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
         ],
       ),
       body: Column(
-        // mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text("Find your style!"),
+          const SizedBox(height: 10),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            child: RichText(
+              text: const TextSpan(
+                style: TextStyle(
+                    fontSize: 30,
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold),
+                children: [
+                  TextSpan(
+                    text: 'Find your ',
+                  ),
+                  TextSpan(
+                    text: 'style',
+                    style: TextStyle(
+                        decorationThickness: 2,
+                        decorationColor: Colors.amber,
+                        decorationStyle: TextDecorationStyle.wavy,
+                        decoration: TextDecoration.underline,
+                        fontSize: 30),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          const SizedBox(height: 10),
           const SizedBox(
             height: 60,
             child: CategoryGrid(),
