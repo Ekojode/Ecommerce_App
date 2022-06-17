@@ -8,7 +8,6 @@ import '../widgets/badge.dart';
 import 'cart_screen.dart';
 
 class ProduuctsDetailScreen extends StatelessWidget {
-  //final String title;
   const ProduuctsDetailScreen({
     Key? key,
   }) : super(key: key);
@@ -23,9 +22,8 @@ class ProduuctsDetailScreen extends StatelessWidget {
         .where((element) => element.id != productId)
         .toList();
 
-    final loadedProduct = Provider.of<ProviderProducts>(
-      context,
-    ).findById(productId);
+    final loadedProduct =
+        Provider.of<ProviderProducts>(context).findById(productId);
     final cart = Provider.of<Cart>(context);
     final cartItem = cart.cartItems;
     double screenHeight = MediaQuery.of(context).size.height -
@@ -37,11 +35,13 @@ class ProduuctsDetailScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white70,
-        title: Text(loadedProduct.title,
-            style: const TextStyle(
-              fontSize: 18.0,
-              color: Colors.black,
-            )),
+        title: Text(
+          loadedProduct.title,
+          style: const TextStyle(
+            fontSize: 18.0,
+            color: Colors.black,
+          ),
+        ),
         centerTitle: true,
         actions: [
           Badge(
@@ -62,20 +62,19 @@ class ProduuctsDetailScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
-                  margin: const EdgeInsets.all(4),
+                  margin:
+                      const EdgeInsets.symmetric(vertical: 8, horizontal: 15),
                   width: widthSize,
-                  height: screenHeight * 0.4,
+                  height: screenHeight * 0.45,
                   decoration:
                       BoxDecoration(borderRadius: BorderRadius.circular(15)),
                   child: ClipRRect(
+                    borderRadius: BorderRadius.circular(15),
                     child: Image.network(
                       loadedProduct.imageUrl,
                       fit: BoxFit.cover,
                     ),
                   )),
-              SizedBox(
-                height: screenHeight * 0.05,
-              ),
               Container(
                 margin: const EdgeInsets.symmetric(horizontal: 15.0),
                 child: Row(
@@ -145,42 +144,55 @@ class ProduuctsDetailScreen extends StatelessWidget {
                     Expanded(
                       flex: 1,
                       child: IconButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          loadedProduct.toggleFavourites();
+                          ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              duration: const Duration(milliseconds: 800),
+                              content: Text(
+                                loadedProduct.isFavourite
+                                    ? "${loadedProduct.title} added to favourites"
+                                    : "${loadedProduct.title} removed from favourites",
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                          );
+                        },
                         icon: Icon(
                           Icons.favorite_outlined,
-                          color: loadedProduct.isFavourite
-                              ? Colors.red
-                              : Colors.grey,
+                          color: loadedProduct.isFavourite ? Colors.red : null,
                         ),
                       ),
                     ),
                     Expanded(
-                        flex: 3,
-                        child: ElevatedButton(
-                          onPressed: () {
-                            cart.addItem(loadedProduct.id, loadedProduct.price,
-                                loadedProduct.title, loadedProduct.imageUrl);
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                action: SnackBarAction(
-                                  label: "UNDO",
-                                  onPressed: () {
-                                    cart.removeItem(loadedProduct.id);
-                                  },
-                                ),
-                                duration: const Duration(milliseconds: 800),
-                                content: Text(
-                                  cartItem.containsKey(loadedProduct.id)
-                                      ? "${loadedProduct.title} is already in cart"
-                                      : "${loadedProduct.title} has been added to cart",
-                                ),
+                      flex: 3,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          cart.addItem(loadedProduct.id, loadedProduct.price,
+                              loadedProduct.title, loadedProduct.imageUrl);
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              action: SnackBarAction(
+                                label: "UNDO",
+                                onPressed: () {
+                                  cart.removeItem(loadedProduct.id);
+                                },
                               ),
-                            );
-                          },
-                          style: ElevatedButton.styleFrom(
-                              primary: Colors.black, onPrimary: Colors.white),
-                          child: const Text("Add to Cart"),
-                        ))
+                              duration: const Duration(milliseconds: 800),
+                              content: Text(
+                                cartItem.containsKey(loadedProduct.id)
+                                    ? "${loadedProduct.title} is already in cart"
+                                    : "${loadedProduct.title} has been added to cart",
+                              ),
+                            ),
+                          );
+                        },
+                        style: ElevatedButton.styleFrom(
+                            primary: Colors.black, onPrimary: Colors.white),
+                        child: const Text("Add to Cart"),
+                      ),
+                    )
                   ],
                 ),
               )

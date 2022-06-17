@@ -3,15 +3,13 @@ import 'package:ecommerce_app/widgets/category_selector.dart';
 import 'package:flutter/material.dart';
 
 class CategoryGrid extends StatelessWidget {
-  // final VoidCallback ontapped;
   const CategoryGrid({
     Key? key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    // final category = Provider.of<Category>(context);
-    final List<Category> categoryList = [
+    List<Category> categoryList = [
       Category(category: "All", isSelected: true),
       Category(category: "Men", isSelected: false),
       Category(category: "Women", isSelected: false),

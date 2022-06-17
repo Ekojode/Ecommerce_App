@@ -46,6 +46,29 @@ class CartScreen extends StatelessWidget {
                     itemBuilder: (context, index) {
                       final item = cartList.values.toList()[index].id;
                       return Dismissible(
+                        confirmDismiss: ((direction) {
+                          return showDialog(
+                              context: context,
+                              builder: (context) {
+                                return AlertDialog(
+                                  title: const Text("Delete Cart Item?"),
+                                  content: const Text(
+                                      "Are you sure you want to delete this Item from the cart?"),
+                                  actions: [
+                                    TextButton(
+                                        onPressed: () {
+                                          Navigator.pop(context, false);
+                                        },
+                                        child: const Text("NO")),
+                                    TextButton(
+                                        onPressed: () {
+                                          Navigator.pop(context, true);
+                                        },
+                                        child: const Text("YES"))
+                                  ],
+                                );
+                              });
+                        }),
                         direction: DismissDirection.endToStart,
                         key: Key(item),
                         onDismissed: (direction) {

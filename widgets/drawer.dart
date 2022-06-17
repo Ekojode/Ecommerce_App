@@ -1,4 +1,5 @@
 import 'package:ecommerce_app/screens/order_screen.dart';
+import 'package:ecommerce_app/screens/user_products_screen.dart';
 import 'package:flutter/material.dart';
 
 class AppDrawer extends StatelessWidget {
@@ -10,32 +11,24 @@ class AppDrawer extends StatelessWidget {
       child: ListView(
         children: [
           DrawerHeader(
-              child: Container(
-            margin: const EdgeInsets.all(12),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                CircleAvatar(
-                  radius: 40,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(50),
-                    child: Image.network(
+            child: Container(
+              margin: const EdgeInsets.all(12),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: const [
+                  CircleAvatar(
+                    radius: 40,
+                    backgroundImage: NetworkImage(
                       "https://cdn.britannica.com/37/231937-050-9228ECA1/Drake-rapper-2019.jpg",
-                      fit: BoxFit.cover,
                     ),
                   ),
-                ),
-                Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: const [
-                      Text("Drake Olusanya"),
-                      Text("draketheguy@gmail.com")
-                    ])
-              ],
+                  Text("Drake Olusanya"),
+                  Text("draketheguy@gmail.com")
+                ],
+              ),
             ),
-          )),
+          ),
           ListTile(
             leading: const Icon(
               Icons.shop,
@@ -54,6 +47,17 @@ class AppDrawer extends StatelessWidget {
             title: const Text("Orders"),
             onTap: () {
               Navigator.of(context).pushReplacementNamed(OrderScreen.routeName);
+            },
+          ),
+          ListTile(
+            leading: const Icon(
+              Icons.edit,
+              color: Colors.pinkAccent,
+            ),
+            title: const Text("Manage Products"),
+            onTap: () {
+              Navigator.of(context)
+                  .pushReplacementNamed(UserProductsScreen.routeName);
             },
           ),
         ],

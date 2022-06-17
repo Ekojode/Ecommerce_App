@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class CategorySelector extends StatelessWidget {
   final String category;
   final bool isSelected;
-  // final VoidCallback ontapped;
+
   const CategorySelector({
     Key? key,
     required this.category,

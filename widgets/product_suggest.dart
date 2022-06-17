@@ -34,12 +34,14 @@ class ProductSuggest extends StatelessWidget {
                   child: Image.network(imgUrl, fit: BoxFit.cover)),
             ),
           ),
-          Text(
-            productTitle,
-            style: const TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-                color: Colors.black87),
+          FittedBox(
+            child: Text(
+              productTitle,
+              style: const TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black87),
+            ),
           )
         ],
       ),
