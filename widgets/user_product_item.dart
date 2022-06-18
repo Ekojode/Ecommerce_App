@@ -1,12 +1,17 @@
+import 'package:ecommerce_app/screens/edit_product_screen.dart';
 import 'package:flutter/material.dart';
 
 class UserProductItem extends StatelessWidget {
+  final String id;
   final String title;
   final String imgUrl;
+  final VoidCallback deleteProduct;
   const UserProductItem({
     Key? key,
     required this.title,
     required this.imgUrl,
+    required this.id,
+    required this.deleteProduct,
   }) : super(key: key);
 
   @override
@@ -23,12 +28,14 @@ class UserProductItem extends StatelessWidget {
           child: Row(
             children: [
               IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pushNamed(context, EditProductScreen.routeName);
+                },
                 icon: const Icon(Icons.edit),
                 color: Colors.black,
               ),
               IconButton(
-                onPressed: () {},
+                onPressed: deleteProduct,
                 icon: const Icon(Icons.delete),
                 color: Theme.of(context).errorColor,
               )

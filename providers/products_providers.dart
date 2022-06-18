@@ -68,12 +68,26 @@ class ProviderProducts with ChangeNotifier {
     return items.firstWhere((element) => element.id == id);
   }
 
-  /*List<Product> suggestProducts(String id) {
-    items.removeWhere((element) => element.id == id);
-    return items;
-  }*/
+  void addItem(Product newProduct) {
+    final Product product = Product(
+        id: DateTime.now().toString(),
+        title: newProduct.title,
+        description: newProduct.description,
+        price: newProduct.price,
+        imageUrl: newProduct.imageUrl);
 
-  void addItem() {
+    _items.add(product);
+    notifyListeners();
+  }
+
+  void editItem(String id, Product editedProduct) {
+    final prodIndex = _items.indexWhere((element) => element.id == id);
+    _items[prodIndex] = editedProduct;
+    notifyListeners();
+  }
+
+  void deleteItem(String id) {
+    _items.removeWhere((element) => element.id == id);
     notifyListeners();
   }
 }

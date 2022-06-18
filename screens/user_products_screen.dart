@@ -34,6 +34,10 @@ class UserProductsScreen extends StatelessWidget {
             return UserProductItem(
               title: productsData.items[index].title,
               imgUrl: productsData.items[index].imageUrl,
+              id: productsData.items[index].id,
+              deleteProduct: () {
+                productsData.deleteItem(productsData.items[index].id);
+              },
             );
           }),
     );
