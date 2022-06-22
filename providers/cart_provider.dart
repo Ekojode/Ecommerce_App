@@ -65,14 +65,17 @@ class Cart with ChangeNotifier {
   void cartItemDecrement(String productId) {
     if (_cartItems.containsKey(productId)) {
       _cartItems.update(
-          productId,
-          (existingCartItem) => CartItem(
-                id: existingCartItem.id,
-                title: existingCartItem.title,
-                price: existingCartItem.price,
-                quantity: existingCartItem.quantity - 1,
-                imgUrl: existingCartItem.imgUrl,
-              ));
+        productId,
+        (existingCartItem) {
+          return CartItem(
+            id: existingCartItem.id,
+            title: existingCartItem.title,
+            price: existingCartItem.price,
+            quantity: existingCartItem.quantity - 1,
+            imgUrl: existingCartItem.imgUrl,
+          );
+        },
+      );
     }
     notifyListeners();
   }

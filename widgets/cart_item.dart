@@ -100,7 +100,6 @@ class NewCartItemList extends StatelessWidget {
                       SizedBox(width: screenWidth * 0.015),
                       InkWell(
                         onTap: increaseCartItem,
-                        //  borderRadius: BorderRadius.circular(15),
                         child: Container(
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(5),

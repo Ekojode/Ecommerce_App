@@ -6,7 +6,7 @@ import '../providers/orders.dart';
 import 'package:flutter/material.dart';
 
 import '../providers/cart_provider.dart';
-import '../widgets/new_cart_item_list.dart';
+import '../widgets/cart_item.dart';
 
 class CartScreen extends StatelessWidget {
   const CartScreen({Key? key}) : super(key: key);
@@ -114,8 +114,22 @@ class CartScreen extends StatelessWidget {
                           id: cartList.values.toList()[index].id,
                           cartId: cartList.keys.toList()[index],
                           decreaseCartItem: () {
-                            cart.cartItemDecrement(
-                                cartList.keys.toList()[index]);
+                            if (cartList.values.toList()[index].quantity >= 2) {
+                              cart.cartItemDecrement(
+                                  cartList.keys.toList()[index]);
+                            } else {
+                              ScaffoldMessenger.of(context).clearSnackBars();
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  backgroundColor: Colors.red,
+                                  duration: Duration(seconds: 3),
+                                  content: Text(
+                                    "Product quantity cannot be less than one",
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
+                              );
+                            }
                           },
                           increaseCartItem: () {
                             cart.cartItemIncrement(
