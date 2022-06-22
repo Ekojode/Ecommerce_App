@@ -68,7 +68,7 @@ class ProduuctsDetailScreen extends StatelessWidget {
                   margin:
                       const EdgeInsets.symmetric(vertical: 8, horizontal: 15),
                   width: widthSize,
-                  height: screenHeight * 0.45,
+                  height: screenHeight * 0.4,
                   decoration:
                       BoxDecoration(borderRadius: BorderRadius.circular(15)),
                   child: ClipRRect(
@@ -79,14 +79,14 @@ class ProduuctsDetailScreen extends StatelessWidget {
                     ),
                   )),
               Container(
-                margin: const EdgeInsets.symmetric(horizontal: 15.0),
+                margin: const EdgeInsets.symmetric(horizontal: 20.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
                       loadedProduct.title,
                       style: const TextStyle(
-                          fontSize: 17.0,
+                          fontSize: 20.0,
                           fontWeight: FontWeight.w800,
                           color: Colors.black),
                     ),
@@ -102,10 +102,10 @@ class ProduuctsDetailScreen extends StatelessWidget {
                 ),
               ),
               SizedBox(
-                height: screenHeight * 0.05,
+                height: screenHeight * 0.025,
               ),
               SizedBox(
-                height: screenHeight * 0.28,
+                height: screenHeight * 0.3,
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
                   itemCount: suggestedProducts.length,
@@ -130,7 +130,9 @@ class ProduuctsDetailScreen extends StatelessWidget {
                       color: Colors.black),
                 ),
               ),
-              const SizedBox(height: 15.0),
+              SizedBox(
+                height: screenHeight * 0.01,
+              ),
               Container(
                 margin: const EdgeInsets.symmetric(horizontal: 15.0),
                 child: Text(
@@ -165,6 +167,7 @@ class ProduuctsDetailScreen extends StatelessWidget {
                         icon: Icon(
                           Icons.favorite_outlined,
                           color: loadedProduct.isFavourite ? Colors.red : null,
+                          size: 40,
                         ),
                       ),
                     ),
@@ -192,7 +195,10 @@ class ProduuctsDetailScreen extends StatelessWidget {
                           );
                         },
                         style: ElevatedButton.styleFrom(
-                            primary: Colors.black, onPrimary: Colors.white),
+                            primary: Colors.black,
+                            onPrimary: Colors.white,
+                            fixedSize:
+                                Size(widthSize * 0.9, screenHeight * 0.09)),
                         child: const Text("Add to Cart"),
                       ),
                     )
