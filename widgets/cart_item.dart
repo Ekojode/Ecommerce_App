@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 
-class CartItemList extends StatelessWidget {
+class NewCartItemList extends StatelessWidget {
   final String id;
   final String cartId;
   final String title;
   final double price;
   final int quantity;
-  final String imgUrl;
   final VoidCallback increaseCartItem;
   final VoidCallback decreaseCartItem;
-  const CartItemList(
+  final String imgUrl;
+  const NewCartItemList(
       {Key? key,
       required this.title,
       required this.price,
@@ -26,31 +26,100 @@ class CartItemList extends StatelessWidget {
     double screenHeight = MediaQuery.of(context).size.height -
         MediaQuery.of(context).padding.top -
         AppBar().preferredSize.height;
-    double widthSize = MediaQuery.of(context).size.width;
-    return Card(
-        margin: const EdgeInsets.all(10),
-        child: ListTile(
-          leading: SizedBox(
-            height: screenHeight * 0.2,
-            width: widthSize * 0.35,
+    double screenWidth = MediaQuery.of(context).size.width;
+    return Container(
+      margin: const EdgeInsets.all(10),
+      child: Row(
+        children: [
+          SizedBox(
+            height: screenHeight * 0.3,
+            width: screenWidth * 0.45,
             child: ClipRRect(
-              borderRadius: BorderRadius.circular(20),
+              borderRadius: BorderRadius.circular(15),
               child: Image.network(
                 imgUrl,
+                fit: BoxFit.cover,
               ),
             ),
           ),
-          title: Text(title),
-          subtitle: Row(
-            children: [
-              IconButton(
-                  onPressed: decreaseCartItem, icon: const Icon(Icons.remove)),
-              Text(quantity.toString()),
-              IconButton(
-                  onPressed: increaseCartItem, icon: const Icon(Icons.add)),
-            ],
+          const SizedBox(width: 15),
+          Expanded(
+            child: SizedBox(
+              height: screenHeight * 0.25,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Text(
+                    title,
+                    style: const TextStyle(
+                        fontWeight: FontWeight.bold, fontSize: 18),
+                  ),
+                  const Text(
+                    "Size : XL",
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold, color: Colors.grey),
+                  ),
+                  RichText(
+                    text: TextSpan(
+                      style: const TextStyle(
+                          fontWeight: FontWeight.bold, color: Colors.black),
+                      children: [
+                        const TextSpan(
+                          text: "\$ ",
+                          style: TextStyle(color: Colors.amber),
+                        ),
+                        TextSpan(
+                          text: " ${(price * quantity).toStringAsFixed(2)}",
+                        ),
+                      ],
+                    ),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      InkWell(
+                        onTap: decreaseCartItem,
+                        //     borderRadius: BorderRadius.circular(5),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5),
+                            border: Border.all(
+                              color: Colors.black,
+                            ),
+                          ),
+                          child: const Icon(Icons.remove),
+                        ),
+                      ),
+                      SizedBox(width: screenWidth * 0.015),
+                      FittedBox(
+                        child: Text(
+                          quantity.toString(),
+                        ),
+                      ),
+                      SizedBox(width: screenWidth * 0.015),
+                      InkWell(
+                        onTap: increaseCartItem,
+                        //  borderRadius: BorderRadius.circular(15),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5),
+                            border: Border.all(
+                              color: Colors.black,
+                            ),
+                          ),
+                          child: const Icon(Icons.add),
+                        ),
+                      ),
+                      const Spacer()
+                    ],
+                  )
+                ],
+              ),
+            ),
           ),
-          trailing: Text((price * quantity).toStringAsFixed(2)),
-        ));
+        ],
+      ),
+    );
   }
 }
