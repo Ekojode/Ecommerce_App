@@ -20,15 +20,29 @@ class OrderScreen extends StatelessWidget {
         title: const Text("Your Orders"),
         centerTitle: true,
       ),
-      body: ListView.builder(
-        itemCount: orderList.length,
-        itemBuilder: (ctx, i) => OrderExpansionTile(
-          orderId: orderList[i].id,
-          amount: orderList[i].totalAmount,
-          dateTime: orderList[i].dateTime,
-          products: orderList[i].products,
-        ),
-      ),
+      body: orderList.isEmpty
+          ? Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text("You haven't placed any orders yet"),
+                  ElevatedButton(
+                      onPressed: () {
+                        Navigator.pushReplacementNamed(context, "/");
+                      },
+                      child: const Text("Return to Shop"))
+                ],
+              ),
+            )
+          : ListView.builder(
+              itemCount: orderList.length,
+              itemBuilder: (ctx, i) => OrderExpansionTile(
+                orderId: orderList[i].id,
+                amount: orderList[i].totalAmount,
+                dateTime: orderList[i].dateTime,
+                products: orderList[i].products,
+              ),
+            ),
     );
   }
 }

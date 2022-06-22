@@ -10,25 +10,15 @@ class AppDrawer extends StatelessWidget {
     return Drawer(
       child: ListView(
         children: [
-          DrawerHeader(
-            child: Container(
-              margin: const EdgeInsets.all(12),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
-                  CircleAvatar(
-                    radius: 40,
-                    backgroundImage: NetworkImage(
-                      "https://cdn.britannica.com/37/231937-050-9228ECA1/Drake-rapper-2019.jpg",
-                    ),
-                  ),
-                  Text("Drake Olusanya"),
-                  Text("draketheguy@gmail.com")
-                ],
+          const UserAccountsDrawerHeader(
+              currentAccountPicture: CircleAvatar(
+                radius: 40,
+                backgroundImage: NetworkImage(
+                  "https://cdn.britannica.com/37/231937-050-9228ECA1/Drake-rapper-2019.jpg",
+                ),
               ),
-            ),
-          ),
+              accountName: Text("Ekojode Oma-Victor"),
+              accountEmail: Text("ekojodeoma@gmail.com")),
           ListTile(
             leading: const Icon(
               Icons.shop,

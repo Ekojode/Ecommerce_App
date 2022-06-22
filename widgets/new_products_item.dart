@@ -59,9 +59,11 @@ class NewProductItem extends StatelessWidget {
           ],
         ),
         const SizedBox(height: 10),
-        Text(
-          product.title,
-          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+        FittedBox(
+          child: Text(
+            product.title,
+            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+          ),
         ),
         const SizedBox(height: 5),
         RichText(
