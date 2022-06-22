@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/cart_provider.dart';
+
 import '../widgets/badge.dart';
 import 'cart_screen.dart';
 
@@ -21,6 +22,8 @@ class ProduuctsDetailScreen extends StatelessWidget {
         .items
         .where((element) => element.id != productId)
         .toList();
+    //  final suggestedProductsList = suggestedProducts.shuffle() as List<Product>;
+    //  final newList = suggestedProductsList;
 
     final loadedProduct =
         Provider.of<ProviderProducts>(context).findById(productId);
