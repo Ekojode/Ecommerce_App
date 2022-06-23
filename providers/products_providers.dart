@@ -7,7 +7,7 @@ import './products.dart';
 
 class ProviderProducts with ChangeNotifier {
   final List<Product> _items = [
-    Product(
+    /*   Product(
       // isFavourite: false,
       id: 'p1',
       title: 'Yellow Track Pants',
@@ -56,7 +56,7 @@ class ProviderProducts with ChangeNotifier {
       price: 49.99,
       imageUrl:
           'https://img.freepik.com/free-photo/fashion-portrait-young-elegant-woman_1328-2712.jpg?w=360',
-    ),
+    ),*/
   ];
 
   List<Product> get items {
@@ -71,26 +71,54 @@ class ProviderProducts with ChangeNotifier {
     return items.firstWhere((element) => element.id == id);
   }
 
+  Future<void> fetchProducts() async {
+    final url = Uri.parse(
+        "https://kide-commerce-default-rtdb.firebaseio.com/products.json");
+    try {
+      final response = await http.get(url);
+      final extractedData = jsonDecode(response.body) as Map<String, dynamic>;
+      final List<Product> loadedProducts = [];
+
+      extractedData.forEach(
+        (productId, productData) {
+          loadedProducts.add(
+            Product(
+                id: productId,
+                title: productData["title"],
+                description: productData["description"],
+                price: productData["price"],
+                imageUrl: productData["imageUrl"]),
+          );
+
+          for (Product element in loadedProducts) {
+            _items.add(element);
+          }
+        },
+      );
+      //    print(extractedData);
+    } catch (error) {
+      rethrow;
+    }
+  }
+
   Future<void> addItem(Product newProduct) async {
     final url = Uri.parse(
-        "https://kide-commerce-default-rtdb.firebaseio.com/products.jso#");
-    http
-        .post(
-      url,
-      body: jsonEncode(
-        {
-          "title": newProduct.title,
-          "price": newProduct.price,
-          "description": newProduct.description,
-          "imageUrl": newProduct.imageUrl,
-          "isFavourite": newProduct.isFavourite,
-        },
-      ),
-    )
-        .then((value) {
-      //   print(jsonDecode(value.body));
+        "https://kide-commerce-default-rtdb.firebaseio.com/products.json");
+    try {
+      final response = await http.post(
+        url,
+        body: jsonEncode(
+          {
+            "title": newProduct.title,
+            "price": newProduct.price,
+            "description": newProduct.description,
+            "imageUrl": newProduct.imageUrl,
+            "isFavourite": newProduct.isFavourite,
+          },
+        ),
+      );
       final Product product = Product(
-          id: jsonDecode(value.body)["name"],
+          id: jsonDecode(response.body)["name"],
           title: newProduct.title,
           description: newProduct.description,
           price: newProduct.price,
@@ -98,10 +126,12 @@ class ProviderProducts with ChangeNotifier {
 
       _items.add(product);
       notifyListeners();
-    }).catchError((error) {
+    } catch (error) {
       print(error);
-      throw error;
-    });
+      rethrow;
+    }
+
+    //   print(jsonDecode(value.body));
   }
 
   void editItem(String id, Product editedProduct) {

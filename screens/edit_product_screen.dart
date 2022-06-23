@@ -1,5 +1,4 @@
 import 'package:ecommerce_app/providers/products.dart';
-import 'package:ecommerce_app/screens/user_products_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/products_providers.dart';
@@ -76,7 +75,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
     }
   }
 
-  void _saveForm() {
+  Future<void> _saveForm() async {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
       setState(() {
@@ -91,10 +90,12 @@ class _EditProductScreenState extends State<EditProductScreen> {
         });
         Navigator.pop(context);
       } else {
-        final newProduct =
-            Provider.of<ProviderProducts>(context, listen: false);
-        newProduct.addItem(_editedProduct).catchError((error) {
-          return showDialog(
+        try {
+          final newProduct =
+              Provider.of<ProviderProducts>(context, listen: false);
+          await newProduct.addItem(_editedProduct);
+        } catch (error) {
+          await showDialog(
               context: context,
               builder: (context) {
                 return AlertDialog(
@@ -104,8 +105,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
                   actions: [
                     TextButton(
                         onPressed: () {
-                          Navigator.pushReplacementNamed(
-                              context, UserProductsScreen.routeName);
+                          Navigator.pop(context);
                         },
                         child: const Text(
                           "OKAY",
@@ -114,12 +114,12 @@ class _EditProductScreenState extends State<EditProductScreen> {
                   ],
                 );
               });
-        }).then((_) {
+        } finally {
           setState(() {
             _isLoading = !_isLoading;
           });
           Navigator.pop(context);
-        });
+        }
       }
     }
   }

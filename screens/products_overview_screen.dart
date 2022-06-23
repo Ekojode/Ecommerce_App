@@ -1,3 +1,4 @@
+import 'package:ecommerce_app/providers/products_providers.dart';
 import 'package:ecommerce_app/screens/cart_screen.dart';
 import 'package:ecommerce_app/widgets/badge.dart';
 import 'package:ecommerce_app/widgets/category_grid.dart';
@@ -17,10 +18,34 @@ class ProductsOverviewScreen extends StatefulWidget {
 
 class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
   bool showFavs = false;
+  bool _isInit = true;
+
+  @override
+  void initState() {
+    /*   Future.delayed(Duration.zero).then((_) {
+      Provider.of<ProviderProducts>(context).fetchProducts();
+    });*/
+    // Provider.of<ProviderProducts>(context).fetchProducts();
+    print("Init State");
+    super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    print("depem");
+    if (_isInit) {
+      Provider.of<ProviderProducts>(context).fetchProducts();
+    }
+    _isInit = false;
+    super.didChangeDependencies();
+  }
+
   @override
   Widget build(BuildContext context) {
     final cart = Provider.of<Cart>(context);
     final cartTotal = cart.quantity;
+    final fetch = Provider.of<ProviderProducts>(context);
+    print("build");
     return Scaffold(
       appBar: AppBar(
         actions: [
@@ -59,6 +84,11 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const SizedBox(height: 10),
+          ElevatedButton(
+              onPressed: () {
+                fetch.fetchProducts();
+              },
+              child: const Text("Fetch")),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8.0),
             child: RichText(
