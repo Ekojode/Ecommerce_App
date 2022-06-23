@@ -22,8 +22,6 @@ class ProduuctsDetailScreen extends StatelessWidget {
         .items
         .where((element) => element.id != productId)
         .toList();
-    //  final suggestedProductsList = suggestedProducts.shuffle() as List<Product>;
-    //  final newList = suggestedProductsList;
 
     final loadedProduct =
         Provider.of<ProviderProducts>(context).findById(productId);
@@ -195,10 +193,10 @@ class ProduuctsDetailScreen extends StatelessWidget {
                           );
                         },
                         style: ElevatedButton.styleFrom(
-                            primary: Colors.black,
-                            onPrimary: Colors.white,
-                            fixedSize:
-                                Size(widthSize * 0.9, screenHeight * 0.09)),
+                          primary: Colors.black,
+                          onPrimary: Colors.white,
+                          fixedSize: Size(widthSize * 0.9, screenHeight * 0.09),
+                        ),
                         child: const Text("Add to Cart"),
                       ),
                     )

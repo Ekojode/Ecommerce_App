@@ -1,6 +1,9 @@
+import "package:http/http.dart" as http;
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 
-import 'products.dart';
+import './products.dart';
 
 class ProviderProducts with ChangeNotifier {
   final List<Product> _items = [
@@ -68,16 +71,34 @@ class ProviderProducts with ChangeNotifier {
     return items.firstWhere((element) => element.id == id);
   }
 
-  void addItem(Product newProduct) {
-    final Product product = Product(
-        id: DateTime.now().toString(),
-        title: newProduct.title,
-        description: newProduct.description,
-        price: newProduct.price,
-        imageUrl: newProduct.imageUrl);
+  Future<void> addItem(Product newProduct) {
+    final url = Uri.parse(
+        "https://kide-commerce-default-rtdb.firebaseio.com/products.jso#");
+    return http
+        .post(
+      url,
+      body: jsonEncode(
+        {
+          "title": newProduct.title,
+          "price": newProduct.price,
+          "description": newProduct.description,
+          "imageUrl": newProduct.imageUrl,
+          "isFavourite": newProduct.isFavourite,
+        },
+      ),
+    )
+        .then((value) {
+      //   print(jsonDecode(value.body));
+      final Product product = Product(
+          id: jsonDecode(value.body)["name"],
+          title: newProduct.title,
+          description: newProduct.description,
+          price: newProduct.price,
+          imageUrl: newProduct.imageUrl);
 
-    _items.add(product);
-    notifyListeners();
+      _items.add(product);
+      notifyListeners();
+    });
   }
 
   void editItem(String id, Product editedProduct) {

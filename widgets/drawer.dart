@@ -14,7 +14,7 @@ class AppDrawer extends StatelessWidget {
               currentAccountPicture: CircleAvatar(
                 radius: 40,
                 backgroundImage: NetworkImage(
-                  "https://cdn.britannica.com/37/231937-050-9228ECA1/Drake-rapper-2019.jpg",
+                  "https://assets.goal.com/v3/assets/bltcc7a7ffd2fbf71f5/blte0aac921c3798f1e/61a633990039cb54c5e25acb/Lionel_Messi_(10).jpg?auto=webp&fit=crop&format=jpg&height=800&quality=60&width=1200",
                 ),
               ),
               accountName: Text("Ekojode Oma-Victor"),
