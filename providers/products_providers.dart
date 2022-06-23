@@ -71,10 +71,10 @@ class ProviderProducts with ChangeNotifier {
     return items.firstWhere((element) => element.id == id);
   }
 
-  Future<void> addItem(Product newProduct) {
+  Future<void> addItem(Product newProduct) async {
     final url = Uri.parse(
         "https://kide-commerce-default-rtdb.firebaseio.com/products.jso#");
-    return http
+    http
         .post(
       url,
       body: jsonEncode(
@@ -98,6 +98,9 @@ class ProviderProducts with ChangeNotifier {
 
       _items.add(product);
       notifyListeners();
+    }).catchError((error) {
+      print(error);
+      throw error;
     });
   }
 

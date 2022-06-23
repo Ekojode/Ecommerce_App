@@ -1,4 +1,5 @@
 import 'package:ecommerce_app/providers/products.dart';
+import 'package:ecommerce_app/screens/user_products_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/products_providers.dart';
@@ -79,22 +80,43 @@ class _EditProductScreenState extends State<EditProductScreen> {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
       setState(() {
-        _isLoading = true;
+        _isLoading = !_isLoading;
       });
       if (_editedProduct.id != "") {
         final newProduct =
             Provider.of<ProviderProducts>(context, listen: false);
         newProduct.editItem(_editedProduct.id, _editedProduct);
         setState(() {
-          _isLoading = false;
+          _isLoading = !_isLoading;
         });
         Navigator.pop(context);
       } else {
         final newProduct =
             Provider.of<ProviderProducts>(context, listen: false);
-        newProduct.addItem(_editedProduct).then((_) {
+        newProduct.addItem(_editedProduct).catchError((error) {
+          return showDialog(
+              context: context,
+              builder: (context) {
+                return AlertDialog(
+                  title: const Text("An error occured"),
+                  content:
+                      const Text("Something went wrong, Please try again!."),
+                  actions: [
+                    TextButton(
+                        onPressed: () {
+                          Navigator.pushReplacementNamed(
+                              context, UserProductsScreen.routeName);
+                        },
+                        child: const Text(
+                          "OKAY",
+                          style: TextStyle(color: Colors.red),
+                        ))
+                  ],
+                );
+              });
+        }).then((_) {
           setState(() {
-            _isLoading = false;
+            _isLoading = !_isLoading;
           });
           Navigator.pop(context);
         });
