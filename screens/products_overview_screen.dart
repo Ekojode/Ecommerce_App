@@ -9,7 +9,8 @@ import 'package:provider/provider.dart';
 import '../providers/cart_provider.dart';
 import '../widgets/product_grid.dart';
 
-class ProductsOverviewScreen extends StatefulWidget {
+class ProductsOverviewScreen extends StatefulWidget
+    with WidgetsBindingObserver {
   const ProductsOverviewScreen({Key? key}) : super(key: key);
 
   @override
@@ -19,24 +20,34 @@ class ProductsOverviewScreen extends StatefulWidget {
 class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
   bool showFavs = false;
   bool _isInit = true;
+  bool _isLoading = false;
+
+  Future<void> _refresh(BuildContext context) async {
+    await Provider.of<ProviderProducts>(context, listen: false).fetchProducts();
+  }
 
   @override
   void initState() {
-    /*   Future.delayed(Duration.zero).then((_) {
-      Provider.of<ProviderProducts>(context).fetchProducts();
-    });*/
-    // Provider.of<ProviderProducts>(context).fetchProducts();
-    print("Init State");
     super.initState();
   }
 
   @override
   void didChangeDependencies() {
-    print("depem");
     if (_isInit) {
-      Provider.of<ProviderProducts>(context).fetchProducts();
+      print(_isInit);
+      setState(() {
+        _isLoading = true;
+      });
+      Provider.of<ProviderProducts>(context).fetchProducts().then((value) {
+        setState(() {
+          _isLoading = false;
+        });
+      });
     }
-    _isInit = false;
+    setState(() {
+      _isInit = false;
+    });
+
     super.didChangeDependencies();
   }
 
@@ -44,8 +55,7 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
   Widget build(BuildContext context) {
     final cart = Provider.of<Cart>(context);
     final cartTotal = cart.quantity;
-    final fetch = Provider.of<ProviderProducts>(context);
-    print("build");
+
     return Scaffold(
       appBar: AppBar(
         actions: [
@@ -80,52 +90,57 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
                   ]),
         ],
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const SizedBox(height: 10),
-          ElevatedButton(
-              onPressed: () {
-                fetch.fetchProducts();
-              },
-              child: const Text("Fetch")),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0),
-            child: RichText(
-              text: const TextSpan(
-                style: TextStyle(
-                    fontSize: 30,
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold),
+      body: _isLoading
+          ? const Center(
+              child: CircularProgressIndicator(
+                color: Colors.black,
+                backgroundColor: Colors.grey,
+              ),
+            )
+          : RefreshIndicator(
+              onRefresh: () => _refresh(context),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  TextSpan(
-                    text: 'Find your ',
+                  const SizedBox(height: 10),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    child: RichText(
+                      text: const TextSpan(
+                        style: TextStyle(
+                            fontSize: 30,
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold),
+                        children: [
+                          TextSpan(
+                            text: 'Find your ',
+                          ),
+                          TextSpan(
+                            text: 'style',
+                            style: TextStyle(
+                                decorationThickness: 2,
+                                decorationColor: Colors.amber,
+                                decorationStyle: TextDecorationStyle.wavy,
+                                decoration: TextDecoration.underline,
+                                fontSize: 30),
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
-                  TextSpan(
-                    text: 'style',
-                    style: TextStyle(
-                        decorationThickness: 2,
-                        decorationColor: Colors.amber,
-                        decorationStyle: TextDecorationStyle.wavy,
-                        decoration: TextDecoration.underline,
-                        fontSize: 30),
+                  const SizedBox(height: 10),
+                  const SizedBox(
+                    height: 60,
+                    child: CategoryGrid(),
+                  ),
+                  Expanded(
+                    child: ProductGrid(
+                      showFavs: showFavs,
+                    ),
                   ),
                 ],
               ),
             ),
-          ),
-          const SizedBox(height: 10),
-          const SizedBox(
-            height: 60,
-            child: CategoryGrid(),
-          ),
-          Expanded(
-            child: ProductGrid(
-              showFavs: showFavs,
-            ),
-          ),
-        ],
-      ),
       drawer: const AppDrawer(),
     );
   }

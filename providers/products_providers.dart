@@ -1,12 +1,13 @@
 import "package:http/http.dart" as http;
 import 'dart:convert';
+import 'dart:async';
 
 import 'package:flutter/material.dart';
 
 import './products.dart';
 
 class ProviderProducts with ChangeNotifier {
-  final List<Product> _items = [
+  List<Product> _items = [
     /*   Product(
       // isFavourite: false,
       id: 'p1',
@@ -87,18 +88,25 @@ class ProviderProducts with ChangeNotifier {
                 title: productData["title"],
                 description: productData["description"],
                 price: productData["price"],
-                imageUrl: productData["imageUrl"]),
+                imageUrl: productData["imageUrl"],
+                isFavourite: productData["isFavourite"]),
           );
 
-          for (Product element in loadedProducts) {
-            _items.add(element);
-          }
+          _items = loadedProducts;
+          notifyListeners();
         },
       );
       //    print(extractedData);
     } catch (error) {
       rethrow;
     }
+  }
+
+  void newToggleFavourites(String id, Product loadedProduct) {
+    final prodIndex = _items.indexWhere((element) => element.id == id);
+    _items[prodIndex] = loadedProduct;
+
+    notifyListeners();
   }
 
   Future<void> addItem(Product newProduct) async {
@@ -127,21 +135,57 @@ class ProviderProducts with ChangeNotifier {
       _items.add(product);
       notifyListeners();
     } catch (error) {
-      print(error);
       rethrow;
     }
 
     //   print(jsonDecode(value.body));
   }
 
-  void editItem(String id, Product editedProduct) {
+  Future<void> editItem(String id, Product editedProduct) async {
     final prodIndex = _items.indexWhere((element) => element.id == id);
-    _items[prodIndex] = editedProduct;
-    notifyListeners();
+    final url = Uri.parse(
+        "https://kide-commerce-default-rtdb.firebaseio.com/products/$id.json");
+    try {
+      http.patch(
+        url,
+        body: jsonEncode(
+          {
+            "title": editedProduct.title,
+            "price": editedProduct.price,
+            "description": editedProduct.description,
+            "imageUrl": editedProduct.imageUrl,
+            "isFavourite": editedProduct.isFavourite,
+          },
+        ),
+      );
+      _items[prodIndex] = editedProduct;
+      notifyListeners();
+    } catch (error) {
+      rethrow;
+    }
   }
 
   void deleteItem(String id) {
-    _items.removeWhere((element) => element.id == id);
+    final url = Uri.parse(
+        "https://kide-commerce-default-rtdb.firebaseio.com/products/$id.json");
+
+    final existingProductIndex =
+        _items.indexWhere((element) => element.id == id);
+    Product? existingProduct = _items[existingProductIndex];
+    _items.removeAt(existingProductIndex);
+    notifyListeners();
+
+    http.delete(url).then((response) {
+      print(response.statusCode);
+      if (response.statusCode >= 400) {}
+      existingProduct = null;
+    }).catchError((error) {
+      _items.insert(existingProductIndex, existingProduct!);
+      throw error;
+    });
+
+    //  _items.removeAt(existingProductIndex);
+
     notifyListeners();
   }
 }

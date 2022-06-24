@@ -1,3 +1,4 @@
+import 'package:ecommerce_app/widgets/like_status.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -32,30 +33,11 @@ class NewProductItem extends StatelessWidget {
               ),
             ),
             Positioned(
-              top: 8,
-              right: 12,
-              child: IconButton(
-                onPressed: () {
-                  product.toggleFavourites();
-                  ScaffoldMessenger.of(context).hideCurrentSnackBar();
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      duration: const Duration(milliseconds: 800),
-                      content: Text(
-                        product.isFavourite
-                            ? "${product.title} added to favourites"
-                            : "${product.title} removed from favourites",
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                  );
-                },
-                icon: Icon(
-                  product.isFavourite ? Icons.favorite : Icons.favorite_outline,
-                  color: product.isFavourite ? Colors.red : null,
-                ),
-              ),
-            ),
+                top: 8,
+                right: 12,
+                child: LikeStatus(
+                  product: product,
+                )),
           ],
         ),
         const SizedBox(height: 10),

@@ -82,13 +82,36 @@ class _EditProductScreenState extends State<EditProductScreen> {
         _isLoading = !_isLoading;
       });
       if (_editedProduct.id != "") {
-        final newProduct =
-            Provider.of<ProviderProducts>(context, listen: false);
-        newProduct.editItem(_editedProduct.id, _editedProduct);
-        setState(() {
-          _isLoading = !_isLoading;
-        });
-        Navigator.pop(context);
+        try {
+          final newProduct =
+              Provider.of<ProviderProducts>(context, listen: false);
+          await newProduct.editItem(_editedProduct.id, _editedProduct);
+          setState(() {
+            _isLoading = !_isLoading;
+          });
+        } catch (error) {
+          await showDialog(
+              context: context,
+              builder: (context) {
+                return AlertDialog(
+                  title: const Text("An error occured"),
+                  content:
+                      const Text("Something went wrong, Please try again!."),
+                  actions: [
+                    TextButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        child: const Text(
+                          "OKAY",
+                          style: TextStyle(color: Colors.red),
+                        ))
+                  ],
+                );
+              });
+        } finally {
+          Navigator.pop(context);
+        }
       } else {
         try {
           final newProduct =

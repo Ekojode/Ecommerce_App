@@ -1,4 +1,5 @@
 import 'package:ecommerce_app/providers/orders.dart';
+import 'package:ecommerce_app/providers/products.dart';
 import 'package:ecommerce_app/providers/products_providers.dart';
 import 'package:ecommerce_app/screens/cart_screen.dart';
 import 'package:ecommerce_app/screens/edit_product_screen.dart';
@@ -22,6 +23,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        //   ChangeNotifierProvider<Product>(create: (_) => Product()),
         ChangeNotifierProvider<ProviderProducts>(
             create: (_) => ProviderProducts()),
         ChangeNotifierProvider<Cart>(create: (_) => Cart()),

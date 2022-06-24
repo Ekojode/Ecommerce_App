@@ -25,6 +25,7 @@ class ProduuctsDetailScreen extends StatelessWidget {
 
     final loadedProduct =
         Provider.of<ProviderProducts>(context).findById(productId);
+    // final newLoadedProduct = Provider.of<Product>(context).toggleFavourites();
     final cart = Provider.of<Cart>(context);
     final cartItem = cart.cartItems;
     double screenHeight = MediaQuery.of(context).size.height -
@@ -66,7 +67,7 @@ class ProduuctsDetailScreen extends StatelessWidget {
                   margin:
                       const EdgeInsets.symmetric(vertical: 8, horizontal: 15),
                   width: widthSize,
-                  height: screenHeight * 0.4,
+                  height: screenHeight * 0.45,
                   decoration:
                       BoxDecoration(borderRadius: BorderRadius.circular(15)),
                   child: ClipRRect(
@@ -144,7 +145,7 @@ class ProduuctsDetailScreen extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Expanded(
+                    /*  Expanded(
                       flex: 1,
                       child: IconButton(
                         onPressed: () {
@@ -168,9 +169,9 @@ class ProduuctsDetailScreen extends StatelessWidget {
                           size: 40,
                         ),
                       ),
-                    ),
+                    ),*/
                     Expanded(
-                      flex: 3,
+                      //  flex: 3,
                       child: ElevatedButton(
                         onPressed: () {
                           cart.addItem(loadedProduct.id, loadedProduct.price,
@@ -195,7 +196,7 @@ class ProduuctsDetailScreen extends StatelessWidget {
                         style: ElevatedButton.styleFrom(
                           primary: Colors.black,
                           onPrimary: Colors.white,
-                          fixedSize: Size(widthSize * 0.9, screenHeight * 0.09),
+                          fixedSize: Size(widthSize * 0.9, screenHeight * 0.08),
                         ),
                         child: const Text("Add to Cart"),
                       ),
