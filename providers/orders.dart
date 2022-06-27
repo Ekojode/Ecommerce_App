@@ -18,10 +18,48 @@ class OrderItem {
 }
 
 class Orders with ChangeNotifier {
-  final List<OrderItem> _order = [];
+  List<OrderItem> _order = [];
 
   List<OrderItem> get orders {
     return _order;
+  }
+
+  Future<void> fetchOrders() async {
+    final url = Uri.parse(
+        "https://kide-commerce-default-rtdb.firebaseio.com/orders.json");
+    try {
+      final response = await http.get(url);
+      // print(response.body == "null");
+
+      if (response.body == "null") {
+        return;
+      } else {
+        final extractedData = jsonDecode(response.body) as Map<String, dynamic>;
+        // print(extractedData);
+        final List<OrderItem> loadedOrders = [];
+
+        extractedData.forEach((orderId, order) {
+          loadedOrders.add(
+            OrderItem(
+              id: orderId,
+              products: (order["cartProducts"] as List<dynamic>)
+                  .map((e) => CartItem(
+                      title: e["title"],
+                      price: e["price"],
+                      quantity: e["quantity"],
+                      id: e["id"],
+                      imgUrl: e["imgUrl"]))
+                  .toList(),
+              totalAmount: order["totalAmount"],
+              dateTime: DateTime.parse(order["time"]),
+            ),
+          );
+          _order = loadedOrders;
+        });
+      }
+    } catch (e) {
+      rethrow;
+    }
   }
 
   Future<void> addOrder(List<CartItem> cartProducts, double totalAmount) async {
@@ -35,9 +73,9 @@ class Orders with ChangeNotifier {
         {
           "totalAmount": totalAmount,
           "time": time.toIso8601String(),
-          "cartProducts": cartProducts.toString()
-          /*        .map((e) => {
-                    {
+          "cartProducts": cartProducts
+              .map((e) => {
+                    ...{
                       "title": e.title,
                       "price": e.price,
                       "quantity": e.quantity,
@@ -45,12 +83,11 @@ class Orders with ChangeNotifier {
                       "imgUrl": e.imgUrl,
                     }
                   })
-              .toList()*/
-          //    .toString()
+              .toList()
         },
       ),
     );
-    print(response.statusCode);
+    // print(response.statusCode);
     _order.add(
       OrderItem(
         id: jsonDecode(response.body)["name"],
