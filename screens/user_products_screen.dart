@@ -15,6 +15,8 @@ class UserProductsScreen extends StatelessWidget {
     await Provider.of<ProviderProducts>(context, listen: false).fetchProducts();
   }
 
+  Future<void> deleteProduct() async {}
+
   @override
   Widget build(BuildContext context) {
     final productsData = Provider.of<ProviderProducts>(context);
@@ -42,8 +44,33 @@ class UserProductsScreen extends StatelessWidget {
                 title: productsData.items[index].title,
                 imgUrl: productsData.items[index].imageUrl,
                 id: productsData.items[index].id,
-                deleteProduct: () {
-                  productsData.deleteItem(productsData.items[index].id);
+                deleteProduct: () async {
+                  try {
+                    await productsData.deleteItem(productsData.items[index].id);
+                  } catch (error) {
+                    showDialog(
+                        context: context,
+                        builder: (context) {
+                          return AlertDialog(
+                            title: const Text(
+                              "An error occured",
+                              style: TextStyle(color: Colors.red),
+                            ),
+                            content: const Text(
+                                "Something went wrong, Please check your internet connection."),
+                            actions: [
+                              TextButton(
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                  child: const Text(
+                                    "OKAY",
+                                    style: TextStyle(color: Colors.red),
+                                  ))
+                            ],
+                          );
+                        });
+                  }
                 },
               );
             }),

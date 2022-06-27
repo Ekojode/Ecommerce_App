@@ -8,11 +8,17 @@ import 'package:flutter/material.dart';
 import '../providers/cart_provider.dart';
 import '../widgets/cart_item.dart';
 
-class CartScreen extends StatelessWidget {
+class CartScreen extends StatefulWidget {
   const CartScreen({Key? key}) : super(key: key);
 
   static const routeName = "/cartScreen";
 
+  @override
+  State<CartScreen> createState() => _CartScreenState();
+}
+
+class _CartScreenState extends State<CartScreen> {
+  bool _isLoading = false;
   @override
   Widget build(BuildContext context) {
     final cart = Provider.of<Cart>(context);
@@ -220,27 +226,62 @@ class CartScreen extends StatelessWidget {
                       ),
                     ),
                     GestureDetector(
-                      onTap: () {
-                        Navigator.pushNamed(context, OrderScreen.routeName);
-                        order.addOrder(
-                            cartList.values.toList(), cart.totalPrice);
-                        cart.clearCart();
+                      onTap: () async {
+                        setState(() {
+                          _isLoading = true;
+                        });
+                        //     Navigator.pushNamed(context, OrderScreen.routeName);
+                        try {
+                          await order.addOrder(
+                              cartList.values.toList(), cart.totalPrice);
+                          //     cart.clearCart();
+
+                          setState(() {
+                            _isLoading = false;
+                          });
+                          cart.clearCart();
+                        } catch (error) {
+                          await showDialog(
+                              context: context,
+                              builder: (context) {
+                                return AlertDialog(
+                                  title: const Text("An error occured"),
+                                  content: const Text(
+                                      "Something went wrong, Order couldn't be completed at the moment Please try again!."),
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                      child: const Text(
+                                        "OKAY",
+                                        style: TextStyle(color: Colors.red),
+                                      ),
+                                    )
+                                  ],
+                                );
+                              });
+                        } finally {
+                          Navigator.pushNamed(context, OrderScreen.routeName);
+                        }
                       },
-                      child: Container(
-                        margin: const EdgeInsets.symmetric(horizontal: 5),
-                        height: screenHeight * 0.075,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: Colors.black),
-                        child: const Center(
-                            child: Text(
-                          "Order Now",
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 18),
-                        )),
-                      ),
+                      child: _isLoading
+                          ? const CircularProgressIndicator()
+                          : Container(
+                              margin: const EdgeInsets.symmetric(horizontal: 5),
+                              height: screenHeight * 0.075,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  color: Colors.black),
+                              child: const Center(
+                                  child: Text(
+                                "Order Now",
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 18),
+                              )),
+                            ),
                     ),
                     SizedBox(
                       height: screenHeight * 0.01,

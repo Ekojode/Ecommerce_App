@@ -1,3 +1,4 @@
+import 'package:ecommerce_app/models/http_exceptions.dart';
 import "package:http/http.dart" as http;
 import 'dart:convert';
 import 'dart:async';
@@ -165,27 +166,25 @@ class ProviderProducts with ChangeNotifier {
     }
   }
 
-  void deleteItem(String id) {
+  Future<void> deleteItem(String id) async {
     final url = Uri.parse(
-        "https://kide-commerce-default-rtdb.firebaseio.com/products/$id.json");
+        "https://kide-commerce-default-rtdb.firebaseio.com/products/$id.jsohn");
 
     final existingProductIndex =
         _items.indexWhere((element) => element.id == id);
     Product? existingProduct = _items[existingProductIndex];
+
     _items.removeAt(existingProductIndex);
-    notifyListeners();
-
-    http.delete(url).then((response) {
-      print(response.statusCode);
-      if (response.statusCode >= 400) {}
-      existingProduct = null;
-    }).catchError((error) {
-      _items.insert(existingProductIndex, existingProduct!);
-      throw error;
-    });
-
-    //  _items.removeAt(existingProductIndex);
 
     notifyListeners();
+
+    final response = await http.delete(url);
+
+    if (response.statusCode >= 400) {
+      _items.insert(existingProductIndex, existingProduct);
+      notifyListeners();
+      throw HttpExceptions("Could not delete product");
+    }
+    // existingProduct = null;
   }
 }

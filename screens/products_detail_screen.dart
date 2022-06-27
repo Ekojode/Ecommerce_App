@@ -22,6 +22,8 @@ class ProduuctsDetailScreen extends StatelessWidget {
         .items
         .where((element) => element.id != productId)
         .toList();
+    suggestedProducts.shuffle();
+    final newSuggestedProducts = suggestedProducts.sublist(0, 3);
 
     final loadedProduct =
         Provider.of<ProviderProducts>(context).findById(productId);
@@ -107,14 +109,14 @@ class ProduuctsDetailScreen extends StatelessWidget {
                 height: screenHeight * 0.3,
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
-                  itemCount: suggestedProducts.length,
+                  itemCount: newSuggestedProducts.length,
                   itemBuilder: (context, index) => ProductSuggest(
-                    imgUrl: suggestedProducts[index].imageUrl,
-                    productTitle: suggestedProducts[index].title,
+                    imgUrl: newSuggestedProducts[index].imageUrl,
+                    productTitle: newSuggestedProducts[index].title,
                     onPressed: () {
                       Navigator.of(context).pushNamed(
                           ProduuctsDetailScreen.routeName,
-                          arguments: suggestedProducts[index].id);
+                          arguments: newSuggestedProducts[index].id);
                     },
                   ),
                 ),
