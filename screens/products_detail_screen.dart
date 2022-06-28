@@ -27,15 +27,12 @@ class ProduuctsDetailScreen extends StatelessWidget {
 
     final loadedProduct =
         Provider.of<ProviderProducts>(context).findById(productId);
-    // final newLoadedProduct = Provider.of<Product>(context).toggleFavourites();
-    final cart = Provider.of<Cart>(context);
-    final cartItem = cart.cartItems;
+
     double screenHeight = MediaQuery.of(context).size.height -
         MediaQuery.of(context).padding.top -
         AppBar().preferredSize.height;
     double widthSize = MediaQuery.of(context).size.width;
 
-    final cartTotal = cart.quantity;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white70,
@@ -48,16 +45,20 @@ class ProduuctsDetailScreen extends StatelessWidget {
         ),
         centerTitle: true,
         actions: [
-          Badge(
-            value: cartTotal.toString(),
-            color: Colors.amber,
-            child: IconButton(
-              icon: const Icon(Icons.shopping_bag),
-              onPressed: () {
-                Navigator.pushNamed(context, CartScreen.routeName);
-              },
+          Consumer<Cart>(
+            builder: (BuildContext context, value, Widget? child) => Badge(
+              value: value.quantity.toString(),
+              color: Colors.amber,
+              child: IconButton(
+                icon: const Icon(Icons.shopping_bag),
+                onPressed: () {
+                  Navigator.pushNamed(context, CartScreen.routeName);
+                },
+              ),
             ),
-          ),
+            /* child: 
+          ),*/
+          )
         ],
       ),
       body: SafeArea(
@@ -147,60 +148,38 @@ class ProduuctsDetailScreen extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    /*  Expanded(
-                      flex: 1,
-                      child: IconButton(
-                        onPressed: () {
-                          loadedProduct.toggleFavourites();
-                          ScaffoldMessenger.of(context).hideCurrentSnackBar();
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              duration: const Duration(milliseconds: 800),
-                              content: Text(
-                                loadedProduct.isFavourite
-                                    ? "${loadedProduct.title} added to favourites"
-                                    : "${loadedProduct.title} removed from favourites",
-                                textAlign: TextAlign.center,
-                              ),
-                            ),
-                          );
-                        },
-                        icon: Icon(
-                          Icons.favorite_outlined,
-                          color: loadedProduct.isFavourite ? Colors.red : null,
-                          size: 40,
-                        ),
-                      ),
-                    ),*/
                     Expanded(
                       //  flex: 3,
-                      child: ElevatedButton(
-                        onPressed: () {
-                          cart.addItem(loadedProduct.id, loadedProduct.price,
-                              loadedProduct.title, loadedProduct.imageUrl);
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              action: SnackBarAction(
-                                label: "UNDO",
-                                onPressed: () {
-                                  cart.removeItem(loadedProduct.id);
-                                },
+                      child: Consumer<Cart>(
+                        builder: (context, value, child) => ElevatedButton(
+                          onPressed: () {
+                            value.addItem(loadedProduct.id, loadedProduct.price,
+                                loadedProduct.title, loadedProduct.imageUrl);
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                action: SnackBarAction(
+                                  label: "UNDO",
+                                  onPressed: () {
+                                    value.removeItem(loadedProduct.id);
+                                  },
+                                ),
+                                duration: const Duration(milliseconds: 800),
+                                content: Text(
+                                  value.cartItems.containsKey(loadedProduct.id)
+                                      ? "${loadedProduct.title} is already in cart"
+                                      : "${loadedProduct.title} has been added to cart",
+                                ),
                               ),
-                              duration: const Duration(milliseconds: 800),
-                              content: Text(
-                                cartItem.containsKey(loadedProduct.id)
-                                    ? "${loadedProduct.title} is already in cart"
-                                    : "${loadedProduct.title} has been added to cart",
-                              ),
-                            ),
-                          );
-                        },
-                        style: ElevatedButton.styleFrom(
-                          primary: Colors.black,
-                          onPrimary: Colors.white,
-                          fixedSize: Size(widthSize * 0.9, screenHeight * 0.08),
+                            );
+                          },
+                          style: ElevatedButton.styleFrom(
+                            primary: Colors.black,
+                            onPrimary: Colors.white,
+                            fixedSize:
+                                Size(widthSize * 0.9, screenHeight * 0.08),
+                          ),
+                          child: const Text("Add to Cart"),
                         ),
-                        child: const Text("Add to Cart"),
                       ),
                     )
                   ],

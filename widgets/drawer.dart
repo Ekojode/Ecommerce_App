@@ -1,3 +1,4 @@
+import 'package:ecommerce_app/screens/new_orders_screen.dart';
 import 'package:ecommerce_app/screens/order_screen.dart';
 import 'package:ecommerce_app/screens/user_products_screen.dart';
 import 'package:flutter/material.dart';
@@ -48,6 +49,17 @@ class AppDrawer extends StatelessWidget {
             onTap: () {
               Navigator.of(context)
                   .pushReplacementNamed(UserProductsScreen.routeName);
+            },
+          ),
+          ListTile(
+            leading: const Icon(
+              Icons.edit,
+              color: Colors.pinkAccent,
+            ),
+            title: const Text("New Order Screen"),
+            onTap: () {
+              Navigator.of(context)
+                  .pushReplacementNamed(NewOrderScreen.routeName);
             },
           ),
         ],
