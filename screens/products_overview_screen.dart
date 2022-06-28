@@ -27,30 +27,6 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
   }
 
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  void didChangeDependencies() {
-    /*  if (_isInit) {
-      setState(() {
-        _isLoading = true;
-      });
-      Provider.of<ProviderProducts>(context).fetchProducts().then((value) {
-        setState(() {
-          _isLoading = false;
-        });
-      });
-    }
-    setState(() {
-      _isInit = false;
-    });*/
-
-    super.didChangeDependencies();
-  }
-
-  @override
   Widget build(BuildContext context) {
     final cart = Provider.of<Cart>(context);
     final cartTotal = cart.quantity;
@@ -89,15 +65,7 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
                   ]),
         ],
       ),
-      body: /*_isLoading
-          ? const Center(
-              child: CircularProgressIndicator(
-                color: Colors.black,
-                backgroundColor: Colors.grey,
-              ),
-            )
-          :*/
-          FutureBuilder(
+      body: FutureBuilder(
         future: Provider.of<ProviderProducts>(context).fetchProducts(),
         builder: ((context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
