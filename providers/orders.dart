@@ -32,10 +32,12 @@ class Orders with ChangeNotifier {
       // print(response.body == "null");
 
       if (response.body == "null") {
+        _order = [];
+        //  notifyListeners();
         return;
       } else {
         final extractedData = jsonDecode(response.body) as Map<String, dynamic>;
-        // print(extractedData);
+
         final List<OrderItem> loadedOrders = [];
 
         extractedData.forEach((orderId, order) {

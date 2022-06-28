@@ -19,8 +19,8 @@ class ProductsOverviewScreen extends StatefulWidget
 
 class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
   bool showFavs = false;
-  bool _isInit = true;
-  bool _isLoading = false;
+  // bool _isInit = true;
+  //bool _isLoading = false;
 
   Future<void> _refresh(BuildContext context) async {
     await Provider.of<ProviderProducts>(context, listen: false).fetchProducts();
@@ -33,7 +33,7 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
 
   @override
   void didChangeDependencies() {
-    if (_isInit) {
+    /*  if (_isInit) {
       setState(() {
         _isLoading = true;
       });
@@ -45,7 +45,7 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
     }
     setState(() {
       _isInit = false;
-    });
+    });*/
 
     super.didChangeDependencies();
   }
@@ -89,57 +89,88 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
                   ]),
         ],
       ),
-      body: _isLoading
+      body: /*_isLoading
           ? const Center(
               child: CircularProgressIndicator(
                 color: Colors.black,
                 backgroundColor: Colors.grey,
               ),
             )
-          : RefreshIndicator(
-              onRefresh: () => _refresh(context),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SizedBox(height: 10),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                    child: RichText(
-                      text: const TextSpan(
-                        style: TextStyle(
-                            fontSize: 30,
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold),
-                        children: [
-                          TextSpan(
-                            text: 'Find your ',
-                          ),
-                          TextSpan(
-                            text: 'style',
-                            style: TextStyle(
-                                decorationThickness: 2,
-                                decorationColor: Colors.amber,
-                                decorationStyle: TextDecorationStyle.wavy,
-                                decoration: TextDecoration.underline,
-                                fontSize: 30),
-                          ),
-                        ],
+          :*/
+          FutureBuilder(
+        future: Provider.of<ProviderProducts>(context).fetchProducts(),
+        builder: ((context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(
+              child: CircularProgressIndicator(
+                color: Colors.black,
+                backgroundColor: Colors.grey,
+              ),
+            );
+          } else {
+            if (snapshot.hasError) {
+              return Center(
+                child: AlertDialog(
+                  title: const Text(
+                    "Error",
+                    style: TextStyle(color: Colors.red),
+                  ),
+                  content: const Text(
+                      "Kindly login or create an account to continue"),
+                  actions: [
+                    TextButton(onPressed: () {}, child: const Text("Login"))
+                  ],
+                ),
+              );
+            } else {
+              return RefreshIndicator(
+                onRefresh: () => _refresh(context),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const SizedBox(height: 10),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: RichText(
+                        text: const TextSpan(
+                          style: TextStyle(
+                              fontSize: 30,
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold),
+                          children: [
+                            TextSpan(
+                              text: 'Find your ',
+                            ),
+                            TextSpan(
+                              text: 'style',
+                              style: TextStyle(
+                                  decorationThickness: 2,
+                                  decorationColor: Colors.amber,
+                                  decorationStyle: TextDecorationStyle.wavy,
+                                  decoration: TextDecoration.underline,
+                                  fontSize: 30),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                  const SizedBox(height: 10),
-                  const SizedBox(
-                    height: 60,
-                    child: CategoryGrid(),
-                  ),
-                  Expanded(
-                    child: ProductGrid(
-                      showFavs: showFavs,
+                    const SizedBox(height: 10),
+                    const SizedBox(
+                      height: 60,
+                      child: CategoryGrid(),
                     ),
-                  ),
-                ],
-              ),
-            ),
+                    Expanded(
+                      child: ProductGrid(
+                        showFavs: showFavs,
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            }
+          }
+        }),
+      ),
       drawer: const AppDrawer(),
     );
   }

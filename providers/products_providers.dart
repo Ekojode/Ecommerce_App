@@ -78,6 +78,7 @@ class ProviderProducts with ChangeNotifier {
         "https://kide-commerce-default-rtdb.firebaseio.com/products.json");
     try {
       final response = await http.get(url);
+      print((response.statusCode));
       final extractedData = jsonDecode(response.body) as Map<String, dynamic>;
       final List<Product> loadedProducts = [];
 
@@ -99,6 +100,7 @@ class ProviderProducts with ChangeNotifier {
       );
       //    print(extractedData);
     } catch (error) {
+      // print(error);
       rethrow;
     }
   }

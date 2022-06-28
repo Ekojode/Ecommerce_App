@@ -12,8 +12,9 @@ class NewOrderScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final order = Provider.of<Orders>(context);
-    final orderList = order.orders;
+    final order = Provider.of<Orders>(context, listen: false);
+    final ordersList = order.orders;
+
     return Scaffold(
       appBar: AppBar(
         title: const Text("Your Orders"),
@@ -21,7 +22,7 @@ class NewOrderScreen extends StatelessWidget {
       ),
       drawer: const AppDrawer(),
       body: FutureBuilder(
-          future: Provider.of<Orders>(context, listen: false).fetchOrders(),
+          future: Provider.of<Orders>(context).fetchOrders(),
           builder: (ctx, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(
@@ -43,7 +44,7 @@ class NewOrderScreen extends StatelessWidget {
                   ],
                 ));
               } else {
-                return orderList.isEmpty
+                return ordersList.isEmpty
                     ? Center(
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -59,13 +60,15 @@ class NewOrderScreen extends StatelessWidget {
                           ],
                         ),
                       )
-                    : ListView.builder(
-                        itemCount: orderList.length,
-                        itemBuilder: (ctx, i) => OrderExpansionTile(
-                          orderId: orderList[i].id,
-                          amount: orderList[i].totalAmount,
-                          dateTime: orderList[i].dateTime,
-                          products: orderList[i].products,
+                    : Consumer<Orders>(
+                        builder: (context, value, child) => ListView.builder(
+                          itemCount: value.orders.length,
+                          itemBuilder: (ctx, i) => OrderExpansionTile(
+                            orderId: value.orders[i].id,
+                            amount: value.orders[i].totalAmount,
+                            dateTime: value.orders[i].dateTime,
+                            products: value.orders[i].products,
+                          ),
                         ),
                       );
               }

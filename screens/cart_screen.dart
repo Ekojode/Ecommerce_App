@@ -1,5 +1,3 @@
-import 'package:ecommerce_app/screens/order_screen.dart';
-
 import 'package:provider/provider.dart';
 import '../providers/orders.dart';
 
@@ -7,6 +5,7 @@ import 'package:flutter/material.dart';
 
 import '../providers/cart_provider.dart';
 import '../widgets/cart_item.dart';
+import 'new_orders_screen.dart';
 
 class CartScreen extends StatefulWidget {
   const CartScreen({Key? key}) : super(key: key);
@@ -262,7 +261,8 @@ class _CartScreenState extends State<CartScreen> {
                                 );
                               });
                         } finally {
-                          Navigator.pushNamed(context, OrderScreen.routeName);
+                          Navigator.pushNamed(
+                              context, NewOrderScreen.routeName);
                         }
                       },
                       child: _isLoading
