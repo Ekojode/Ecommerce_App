@@ -1,6 +1,7 @@
 import 'package:ecommerce_app/providers/orders.dart';
 
 import 'package:ecommerce_app/providers/products_providers.dart';
+import 'package:ecommerce_app/screens/auth_screen.dart';
 import 'package:ecommerce_app/screens/cart_screen.dart';
 import 'package:ecommerce_app/screens/edit_product_screen.dart';
 import 'package:ecommerce_app/screens/new_orders_screen.dart';
@@ -10,7 +11,6 @@ import 'package:ecommerce_app/screens/user_products_screen.dart';
 import "package:flutter/material.dart";
 import 'package:provider/provider.dart';
 
-import './screens/products_overview_screen.dart';
 import 'providers/cart_provider.dart';
 import './screens/new_orders_screen.dart';
 
@@ -39,7 +39,7 @@ class MyApp extends StatelessWidget {
                 backgroundColor: Color(0xfff9f9f9),
                 foregroundColor: Colors.black),
           ),
-          home: const ProductsOverviewScreen(),
+          home: const AuthScreen(),
           routes: {
             ProduuctsDetailScreen.routeName: (context) =>
                 const ProduuctsDetailScreen(),
