@@ -11,6 +11,7 @@ import 'package:ecommerce_app/screens/user_products_screen.dart';
 import "package:flutter/material.dart";
 import 'package:provider/provider.dart';
 
+import 'providers/auth_provider.dart';
 import 'providers/cart_provider.dart';
 import './screens/new_orders_screen.dart';
 
@@ -25,6 +26,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        ChangeNotifierProvider<Auth>(create: (_) => Auth()),
         ChangeNotifierProvider<ProviderProducts>(
             create: (_) => ProviderProducts()),
         ChangeNotifierProvider<Cart>(create: (_) => Cart()),
