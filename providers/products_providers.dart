@@ -8,6 +8,10 @@ import 'package:flutter/material.dart';
 import './products.dart';
 
 class ProviderProducts with ChangeNotifier {
+  final String authToken;
+
+  ProviderProducts(this.authToken, this._items);
+
   List<Product> _items = [
     /*   Product(
       // isFavourite: false,
@@ -75,7 +79,7 @@ class ProviderProducts with ChangeNotifier {
 
   Future<void> fetchProducts() async {
     final url = Uri.parse(
-        "https://kide-commerce-default-rtdb.firebaseio.com/products.json");
+        "https://kide-commerce-default-rtdb.firebaseio.com/products.json?auth=$authToken");
     try {
       final response = await http.get(url);
 
@@ -93,8 +97,10 @@ class ProviderProducts with ChangeNotifier {
                 imageUrl: productData["imageUrl"],
                 isFavourite: productData["isFavourite"]),
           );
+          // print(loadedProducts[0].title);
 
           _items = loadedProducts;
+          print(_items.length);
           notifyListeners();
         },
       );
