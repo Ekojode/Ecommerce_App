@@ -97,11 +97,10 @@ class ProviderProducts with ChangeNotifier {
                 imageUrl: productData["imageUrl"],
                 isFavourite: productData["isFavourite"]),
           );
-          // print(loadedProducts[0].title);
 
           _items = loadedProducts;
-          print(_items.length);
-          notifyListeners();
+
+          //  notifyListeners();
         },
       );
       //    print(extractedData);
@@ -111,16 +110,9 @@ class ProviderProducts with ChangeNotifier {
     }
   }
 
-  void newToggleFavourites(String id, Product loadedProduct) {
-    final prodIndex = _items.indexWhere((element) => element.id == id);
-    _items[prodIndex] = loadedProduct;
-
-    notifyListeners();
-  }
-
   Future<void> addItem(Product newProduct) async {
     final url = Uri.parse(
-        "https://kide-commerce-default-rtdb.firebaseio.com/products.json");
+        "https://kide-commerce-default-rtdb.firebaseio.com/products.json?auth=$authToken");
     try {
       final response = await http.post(
         url,
@@ -153,7 +145,7 @@ class ProviderProducts with ChangeNotifier {
   Future<void> editItem(String id, Product editedProduct) async {
     final prodIndex = _items.indexWhere((element) => element.id == id);
     final url = Uri.parse(
-        "https://kide-commerce-default-rtdb.firebaseio.com/products/$id.json");
+        "https://kide-commerce-default-rtdb.firebaseio.com/products/$id.json?auth=$authToken");
     try {
       http.patch(
         url,
@@ -176,7 +168,7 @@ class ProviderProducts with ChangeNotifier {
 
   Future<void> deleteItem(String id) async {
     final url = Uri.parse(
-        "https://kide-commerce-default-rtdb.firebaseio.com/products/$id.jsohn");
+        "https://kide-commerce-default-rtdb.firebaseio.com/products/$id.json?auth=$authToken");
 
     final existingProductIndex =
         _items.indexWhere((element) => element.id == id);

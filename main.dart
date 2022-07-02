@@ -15,7 +15,6 @@ import 'package:provider/provider.dart';
 import 'providers/auth_provider.dart';
 import 'providers/cart_provider.dart';
 import './screens/new_orders_screen.dart';
-import 'providers/products.dart';
 
 void main() {
   runApp(const MyApp());
@@ -32,15 +31,16 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProxyProvider<Auth, ProviderProducts>(
             create: (_) => ProviderProducts("", []),
             update: (context, auth, previousProducts) =>
-                ProviderProducts(auth.token, previousProducts!.items
-                    //  previousProducts == null ? [] : previousProducts.items,
-                    )),
+                ProviderProducts(auth.token, previousProducts!.items)),
         ChangeNotifierProvider<Cart>(create: (_) => Cart()),
-        ChangeNotifierProvider<Orders>(create: (_) => Orders()),
+        ChangeNotifierProxyProvider<Auth, Orders>(
+            create: (_) => Orders([], ""),
+            update: (context, auth, previousOrders) =>
+                Orders(previousOrders!.orders, auth.token)),
       ],
       builder: (context, child) {
         return Consumer<Auth>(
-          builder: (context, auth, child) => MaterialApp(
+          builder: (BuildContext context, auth, Widget? child) => MaterialApp(
             debugShowCheckedModeBanner: false,
             theme: ThemeData(
               scaffoldBackgroundColor: const Color(0xfff9f9f9),
@@ -65,8 +65,10 @@ class MyApp extends StatelessWidget {
                   const EditProductScreen()),
               NewOrderScreen.routeName: (context) => const NewOrderScreen(),
             },
+
+            //   child:
           ),
-          //   child:
+          //  child:
         );
       },
     );

@@ -30,7 +30,6 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
   Widget build(BuildContext context) {
     final cart = Provider.of<Cart>(context);
     final cartTotal = cart.quantity;
-    print("build");
 
     return Scaffold(
       appBar: AppBar(
@@ -78,7 +77,6 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
             );
           } else {
             if (snapshot.hasError) {
-              print(snapshot.error.toString());
               return Center(
                 child: AlertDialog(
                   title: const Text(

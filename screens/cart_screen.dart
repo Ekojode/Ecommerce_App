@@ -239,7 +239,11 @@ class _CartScreenState extends State<CartScreen> {
                             _isLoading = false;
                           });
                           cart.clearCart();
+                          // ignore: use_build_context_synchronously
+                          Navigator.pushNamed(
+                              context, NewOrderScreen.routeName);
                         } catch (error) {
+                          print(error.toString());
                           await showDialog(
                               context: context,
                               builder: (context) {
@@ -260,10 +264,10 @@ class _CartScreenState extends State<CartScreen> {
                                   ],
                                 );
                               });
-                        } finally {
-                          Navigator.pushNamed(
-                              context, NewOrderScreen.routeName);
-                        }
+                        } //finally {
+                        //Navigator.pushNamed(
+                        //  context, NewOrderScreen.routeName);
+                        //}
                       },
                       child: _isLoading
                           ? const CircularProgressIndicator()

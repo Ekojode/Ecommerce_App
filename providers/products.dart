@@ -21,9 +21,9 @@ class Product with ChangeNotifier {
       required this.imageUrl,
       this.isFavourite = false});
 
-  Future<void> toggleFavourites(String id) async {
+  Future<void> toggleFavourites(String id, String token) async {
     final url = Uri.parse(
-        "https://kide-commerce-default-rtdb.firebaseio.com/products/$id.json");
+        "https://kide-commerce-default-rtdb.firebaseio.com/products/$id.json?auth=$token");
     final oldStatus = isFavourite;
     isFavourite = !isFavourite;
     notifyListeners();
