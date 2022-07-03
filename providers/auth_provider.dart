@@ -7,9 +7,9 @@ import 'package:http/http.dart' as http;
 import '../models/http_exceptions.dart';
 
 class Auth with ChangeNotifier {
-  late final String _token;
+  String _token = "";
   DateTime _expiryDate = DateTime(2022, 1, 1);
-  late final String _userId;
+  String _userId = "";
 
   String get token {
     if (_expiryDate != DateTime(2022, 1, 1) &&
@@ -18,6 +18,10 @@ class Auth with ChangeNotifier {
       return _token;
     }
     return "";
+  }
+
+  String get userId {
+    return _userId;
   }
 
   bool get isAuth {

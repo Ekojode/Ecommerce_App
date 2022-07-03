@@ -81,7 +81,6 @@ class _AuthStatusScreenState extends State<AuthScreen> {
             .signUp(_authData["email"]!, _authData["password"]!);
       }
     } on HttpExceptions catch (error) {
-      // print(error.toString());
       String errorMessage = "Authentification failed";
       if (error.toString().contains("EMAIL_EXISTS")) {
         errorMessage =
@@ -100,7 +99,7 @@ class _AuthStatusScreenState extends State<AuthScreen> {
       _showErrorDialog(errorMessage);
     } catch (error) {
       const errorMessage = "Could not authenticate, Pleasse try again later";
-      // print(error.toString() + "hhh");
+
       _showErrorDialog(errorMessage);
     } finally {
       setState(() {

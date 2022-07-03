@@ -21,16 +21,16 @@ class Product with ChangeNotifier {
       required this.imageUrl,
       this.isFavourite = false});
 
-  Future<void> toggleFavourites(String id, String token) async {
+  Future<void> toggleFavourites(String id, String token, String userId) async {
     final url = Uri.parse(
-        "https://kide-commerce-default-rtdb.firebaseio.com/products/$id.json?auth=$token");
+        "https://kide-commerce-default-rtdb.firebaseio.com/userFavourites/$userId/$id.json?auth=$token");
     final oldStatus = isFavourite;
     isFavourite = !isFavourite;
     notifyListeners();
 
-    final response = await http.patch(url,
+    final response = await http.put(url,
         body: jsonEncode({
-          "isFavourite": isFavourite,
+          isFavourite,
         }));
 
     if (response.statusCode >= 400) {

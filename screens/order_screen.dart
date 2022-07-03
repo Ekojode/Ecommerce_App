@@ -19,12 +19,13 @@ class _OrderScreenState extends State<OrderScreen> {
   // Future _orderList;
 
   @override
-  void didChangeDependencies() {
-    print("depem");
+  void didChangeDependencies() async {
     setState(() {
       isLoading = true;
     });
-    Provider.of<Orders>(context, listen: false).fetchOrders().then((_) {
+    await Provider.of<Orders>(
+      context,
+    ).fetchOrders().then((_) {
       setState(() {
         isLoading = false;
       });
@@ -34,6 +35,7 @@ class _OrderScreenState extends State<OrderScreen> {
 
   @override
   Widget build(BuildContext context) {
+    print("build");
     final order = Provider.of<Orders>(context);
     final orderList = order.orders;
     return Scaffold(

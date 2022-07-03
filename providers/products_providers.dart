@@ -9,8 +9,9 @@ import './products.dart';
 
 class ProviderProducts with ChangeNotifier {
   final String authToken;
+  final String userId;
 
-  ProviderProducts(this.authToken, this._items);
+  ProviderProducts(this.authToken, this._items, this.userId);
 
   List<Product> _items = [
     /*   Product(
@@ -77,14 +78,22 @@ class ProviderProducts with ChangeNotifier {
     return items.firstWhere((element) => element.id == id);
   }
 
-  Future<void> fetchProducts() async {
+  Future<void> fetchProducts([bool filterByUser = false]) async {
+    final String filterString =
+        filterByUser ? 'orderBy="creatorId"&equalTo="$userId"' : "";
     final url = Uri.parse(
-        "https://kide-commerce-default-rtdb.firebaseio.com/products.json?auth=$authToken");
+        'https://kide-commerce-default-rtdb.firebaseio.com/products.json?auth=$authToken&$filterString');
+    final favouriteUrl = Uri.parse(
+        "https://kide-commerce-default-rtdb.firebaseio.com/userFavourites/$userId.json?auth=$authToken");
     try {
       final response = await http.get(url);
 
       final extractedData = jsonDecode(response.body) as Map<String, dynamic>;
       final List<Product> loadedProducts = [];
+
+      final favouriteResponse = await http.get(favouriteUrl);
+      final favouriteData = jsonDecode(favouriteResponse.body);
+      //   print(favouriteResponse.body);
 
       extractedData.forEach(
         (productId, productData) {
@@ -95,7 +104,9 @@ class ProviderProducts with ChangeNotifier {
                 description: productData["description"],
                 price: productData["price"],
                 imageUrl: productData["imageUrl"],
-                isFavourite: productData["isFavourite"]),
+                isFavourite: favouriteData == null
+                    ? false
+                    : favouriteData[productId] ?? false),
           );
 
           _items = loadedProducts;
@@ -122,7 +133,8 @@ class ProviderProducts with ChangeNotifier {
             "price": newProduct.price,
             "description": newProduct.description,
             "imageUrl": newProduct.imageUrl,
-            "isFavourite": newProduct.isFavourite,
+            "creatorId": userId,
+            // "isFavourite": newProduct.isFavourite,
           },
         ),
       );
@@ -156,6 +168,7 @@ class ProviderProducts with ChangeNotifier {
             "description": editedProduct.description,
             "imageUrl": editedProduct.imageUrl,
             "isFavourite": editedProduct.isFavourite,
+            "creatorId": userId,
           },
         ),
       );

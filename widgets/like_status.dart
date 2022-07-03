@@ -15,7 +15,7 @@ class LikeStatus extends StatelessWidget {
       builder: (context, value, child) => IconButton(
         onPressed: () async {
           try {
-            product.toggleFavourites(product.id, value.token);
+            product.toggleFavourites(product.id, value.token, value.userId);
           } catch (error) {
             ScaffoldMessenger.of(context)
                 .showSnackBar(const SnackBar(content: Text("Error Occurred")));

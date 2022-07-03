@@ -243,7 +243,6 @@ class _CartScreenState extends State<CartScreen> {
                           Navigator.pushNamed(
                               context, NewOrderScreen.routeName);
                         } catch (error) {
-                          print(error.toString());
                           await showDialog(
                               context: context,
                               builder: (context) {

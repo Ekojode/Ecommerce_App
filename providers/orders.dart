@@ -60,6 +60,7 @@ class Orders with ChangeNotifier {
           );
           _order = loadedOrders;
         });
+        //  notifyListeners();
       }
     } catch (e) {
       rethrow;
