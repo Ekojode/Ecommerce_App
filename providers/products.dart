@@ -29,9 +29,9 @@ class Product with ChangeNotifier {
     notifyListeners();
 
     final response = await http.put(url,
-        body: jsonEncode({
+        body: jsonEncode(
           isFavourite,
-        }));
+        ));
 
     if (response.statusCode >= 400) {
       //  print(response.statusCode);

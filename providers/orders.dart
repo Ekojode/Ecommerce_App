@@ -19,7 +19,8 @@ class OrderItem {
 
 class Orders with ChangeNotifier {
   final String authToken;
-  Orders(this._order, this.authToken);
+  final String userId;
+  Orders(this._order, this.userId, this.authToken);
   List<OrderItem> _order = [];
 
   List<OrderItem> get orders {
@@ -28,7 +29,7 @@ class Orders with ChangeNotifier {
 
   Future<void> fetchOrders() async {
     final url = Uri.parse(
-        "https://kide-commerce-default-rtdb.firebaseio.com/orders.json?auth=$authToken");
+        "https://kide-commerce-default-rtdb.firebaseio.com/userOrders/$userId.json?auth=$authToken");
     try {
       final response = await http.get(url);
       // print(response.body == "null");
@@ -69,7 +70,7 @@ class Orders with ChangeNotifier {
 
   Future<void> addOrder(List<CartItem> cartProducts, double totalAmount) async {
     final url = Uri.parse(
-        "https://kide-commerce-default-rtdb.firebaseio.com/orders.json?auth=$authToken");
+        "https://kide-commerce-default-rtdb.firebaseio.com/userOrders/$userId.json?auth=$authToken");
     final time = DateTime.now();
 
     final response = await http.post(
