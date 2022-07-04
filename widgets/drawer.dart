@@ -65,13 +65,6 @@ class AppDrawer extends StatelessWidget {
             ),
             onTap: Provider.of<Auth>(context).logOut,
           ),
-          /*     ElevatedButton(
-            onPressed: Provider.of<Auth>(context).logOut,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: const [Text("Log Out"), Icon(Icons.logout_outlined)],
-            ),
-          ),*/
         ],
       ),
     );

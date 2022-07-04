@@ -10,6 +10,7 @@ class Auth with ChangeNotifier {
   late String _token;
   DateTime _expiryDate = DateTime(2022, 1, 1);
   late String _userId;
+  Timer _authTimer = Timer(const Duration(days: 1), () {});
 
   String get token {
     if (_expiryDate != DateTime(2022, 1, 1) &&
@@ -55,6 +56,7 @@ class Auth with ChangeNotifier {
           seconds: int.parse(responseData["expiresIn"]),
         ),
       );
+      _autoLogOut();
       notifyListeners();
     } catch (error) {
       rethrow;
@@ -73,6 +75,18 @@ class Auth with ChangeNotifier {
     _token = "";
     _userId = "";
     _expiryDate = DateTime(2022, 1, 1);
+    if (_authTimer != Timer(const Duration(days: 1), () {})) {
+      _authTimer.cancel();
+      _authTimer = Timer(const Duration(days: 1), () {});
+    }
     notifyListeners();
+  }
+
+  void _autoLogOut() {
+    if (_authTimer != Timer(const Duration(days: 1), () {})) {
+      _authTimer.cancel();
+    }
+    final timeToLogOut = _expiryDate.difference(DateTime.now()).inSeconds;
+    _authTimer = Timer(Duration(seconds: timeToLogOut), logOut);
   }
 }
