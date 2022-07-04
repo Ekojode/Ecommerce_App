@@ -5,7 +5,8 @@ import 'package:flutter/material.dart';
 
 import '../providers/cart_provider.dart';
 import '../widgets/cart_item.dart';
-import 'new_orders_screen.dart';
+
+import 'order_screen.dart';
 
 class CartScreen extends StatefulWidget {
   const CartScreen({Key? key}) : super(key: key);
@@ -240,8 +241,7 @@ class _CartScreenState extends State<CartScreen> {
                           });
                           cart.clearCart();
                           // ignore: use_build_context_synchronously
-                          Navigator.pushNamed(
-                              context, NewOrderScreen.routeName);
+                          Navigator.pushNamed(context, OrderScreen.routeName);
                         } catch (error) {
                           await showDialog(
                               context: context,

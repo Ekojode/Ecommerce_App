@@ -43,44 +43,42 @@ class _OrderScreenState extends State<OrderScreen> {
         title: const Text("Your Orders"),
         centerTitle: true,
       ),
-      body: isLoading
-          ? const Center(
-              child: CircularProgressIndicator(),
-            )
-          : orderList.isEmpty
-              ? Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
+      body: RefreshIndicator(
+        onRefresh: Provider.of<Orders>(context).fetchOrders,
+        child: isLoading
+            ? const Center(
+                child: CircularProgressIndicator(),
+              )
+            : orderList.isEmpty
+                ? Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Text("You haven't placed any orders yet"),
+                        ElevatedButton(
+                            onPressed: () {
+                              Navigator.pushReplacementNamed(context, "/");
+                            },
+                            child: const Text("Return to Shop"))
+                      ],
+                    ),
+                  )
+                : Column(
                     children: [
-                      const Text("You haven't placed any orders yet"),
-                      ElevatedButton(
-                          onPressed: () {
-                            Navigator.pushReplacementNamed(context, "/");
-                          },
-                          child: const Text("Return to Shop"))
-                    ],
-                  ),
-                )
-              : Column(
-                  children: [
-                    ElevatedButton(
-                        onPressed: () {
-                          order.fetchOrders();
-                        },
-                        child: const Text("Fetch Products")),
-                    Expanded(
-                      child: ListView.builder(
-                        itemCount: orderList.length,
-                        itemBuilder: (ctx, i) => OrderExpansionTile(
-                          orderId: orderList[i].id,
-                          amount: orderList[i].totalAmount,
-                          dateTime: orderList[i].dateTime,
-                          products: orderList[i].products,
+                      Expanded(
+                        child: ListView.builder(
+                          itemCount: orderList.length,
+                          itemBuilder: (ctx, i) => OrderExpansionTile(
+                            orderId: orderList[i].id,
+                            amount: orderList[i].totalAmount,
+                            dateTime: orderList[i].dateTime,
+                            products: orderList[i].products,
+                          ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
+                    ],
+                  ),
+      ),
     );
   }
 }

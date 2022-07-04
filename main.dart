@@ -4,7 +4,7 @@ import 'package:ecommerce_app/providers/products_providers.dart';
 import 'package:ecommerce_app/screens/auth_screen.dart';
 import 'package:ecommerce_app/screens/cart_screen.dart';
 import 'package:ecommerce_app/screens/edit_product_screen.dart';
-import 'package:ecommerce_app/screens/new_orders_screen.dart';
+
 import 'package:ecommerce_app/screens/order_screen.dart';
 import 'package:ecommerce_app/screens/products_detail_screen.dart';
 import 'package:ecommerce_app/screens/products_overview_screen.dart';
@@ -14,7 +14,6 @@ import 'package:provider/provider.dart';
 
 import 'providers/auth_provider.dart';
 import 'providers/cart_provider.dart';
-import './screens/new_orders_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -63,10 +62,7 @@ class MyApp extends StatelessWidget {
                   const UserProductsScreen()),
               EditProductScreen.routeName: ((context) =>
                   const EditProductScreen()),
-              NewOrderScreen.routeName: (context) => const NewOrderScreen(),
             },
-
-            //   child:
           ),
           //  child:
         );

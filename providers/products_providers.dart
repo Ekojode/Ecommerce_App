@@ -94,10 +94,6 @@ class ProviderProducts with ChangeNotifier {
       final favouriteResponse = await http.get(favouriteUrl);
       final favouriteData = jsonDecode(favouriteResponse.body);
 
-      //   print(favouriteResponse.body);
-      print(favouriteData);
-      //   print(favouriteData["-N5KEbBPHRpffS5-_9eJ"]);
-
       extractedData.forEach(
         (productId, productData) {
           loadedProducts.add(
