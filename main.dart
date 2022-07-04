@@ -8,6 +8,7 @@ import 'package:ecommerce_app/screens/edit_product_screen.dart';
 import 'package:ecommerce_app/screens/order_screen.dart';
 import 'package:ecommerce_app/screens/products_detail_screen.dart';
 import 'package:ecommerce_app/screens/products_overview_screen.dart';
+import 'package:ecommerce_app/screens/splash_screen.dart';
 import 'package:ecommerce_app/screens/user_products_screen.dart';
 import "package:flutter/material.dart";
 import 'package:provider/provider.dart';
@@ -52,7 +53,13 @@ class MyApp extends StatelessWidget {
                 //   print(auth),
                 auth.isAuth
                     ? const ProductsOverviewScreen()
-                    : const AuthScreen(),
+                    : FutureBuilder(
+                        future: auth.tryAutoLogin(),
+                        builder: (context, authResultSnapShot) =>
+                            authResultSnapShot.connectionState ==
+                                    ConnectionState.waiting
+                                ? const SplashScreen()
+                                : const AuthScreen()),
             routes: {
               ProduuctsDetailScreen.routeName: (context) =>
                   const ProduuctsDetailScreen(),
