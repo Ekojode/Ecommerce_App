@@ -75,9 +75,12 @@ class ProduuctsDetailScreen extends StatelessWidget {
                       BoxDecoration(borderRadius: BorderRadius.circular(15)),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(15),
-                    child: Image.network(
-                      loadedProduct.imageUrl,
-                      fit: BoxFit.cover,
+                    child: Hero(
+                      tag: loadedProduct.id,
+                      child: Image.network(
+                        loadedProduct.imageUrl,
+                        fit: BoxFit.cover,
+                      ),
                     ),
                   )),
               Container(

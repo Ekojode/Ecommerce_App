@@ -13,7 +13,8 @@ class AuthScreen extends StatefulWidget {
   State<AuthScreen> createState() => _AuthStatusScreenState();
 }
 
-class _AuthStatusScreenState extends State<AuthScreen> {
+class _AuthStatusScreenState extends State<AuthScreen>
+    with SingleTickerProviderStateMixin {
   final Map<String, String> _authData = {
     'email': '',
     'password': '',
@@ -23,14 +24,9 @@ class _AuthStatusScreenState extends State<AuthScreen> {
   bool _isObscure = true;
   bool _isConfirmPasswordObscure = true;
   bool _isLoading = false;
+  bool _isChecked = false;
   final _passwordFocusNode = FocusNode();
   final _passwordController = TextEditingController();
-
-  /*void _updatePasswordFocus() {
-    if (!_passwordFocusNode.hasFocus) {
-      setState(() {});
-    }
-  }*/
 
   @override
   void initState() {
@@ -117,10 +113,8 @@ class _AuthStatusScreenState extends State<AuthScreen> {
         child: Container(
           margin: const EdgeInsets.symmetric(horizontal: 15),
           child: Column(
-            //    mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              //  Sign(),
               SizedBox(
                 height: deviceSize.height * 0.025,
               ),
@@ -140,10 +134,12 @@ class _AuthStatusScreenState extends State<AuthScreen> {
                   ),
                 ),
               ),
-              SizedBox(
+              AnimatedContainer(
                 height: _authStatus == AuthStatus.signUp
                     ? deviceSize.height * 0.42
                     : deviceSize.height * 0.32,
+                duration: const Duration(milliseconds: 500),
+                curve: Curves.easeInSine,
                 child: SingleChildScrollView(
                   child: Form(
                     key: _formKey,
@@ -247,29 +243,53 @@ class _AuthStatusScreenState extends State<AuthScreen> {
                                 obscureText: _isConfirmPasswordObscure,
                               ),
                         _authStatus == AuthStatus.signUp
-                            ? SizedBox(
-                                child: Center(
-                                  child: RichText(
-                                      text: TextSpan(
-                                          style: const TextStyle(
-                                              color: Colors.black),
-                                          children: [
-                                        const TextSpan(
-                                            text:
-                                                "By signing up, you agree to our "),
-                                        TextSpan(
-                                            text: "Terms & Conditions",
-                                            style: TextStyle(
-                                                color: Colors.blue.shade700,
-                                                fontWeight: FontWeight.bold)),
-                                        const TextSpan(text: " and"),
-                                        TextSpan(
-                                            text: " Privacy Policy",
-                                            style: TextStyle(
-                                                color: Colors.blue.shade700,
-                                                fontWeight: FontWeight.bold)),
-                                      ])),
-                                ),
+                            ? Column(
+                                children: [
+                                  SizedBox(height: deviceSize.height * 0.03),
+                                  Row(
+                                    children: [
+                                      Checkbox(
+                                          activeColor: Colors.black,
+                                          value: _isChecked,
+                                          onChanged: (value) {
+                                            setState(() {
+                                              _isChecked = value!;
+                                            });
+                                          }),
+                                      Expanded(
+                                        child: SizedBox(
+                                          child: Center(
+                                            child: RichText(
+                                                text: TextSpan(
+                                                    style: const TextStyle(
+                                                        color: Colors.black),
+                                                    children: [
+                                                  const TextSpan(
+                                                      text:
+                                                          "By signing up, you agree to our "),
+                                                  TextSpan(
+                                                      text:
+                                                          "Terms & Conditions",
+                                                      style: TextStyle(
+                                                          color: Colors
+                                                              .blue.shade700,
+                                                          fontWeight:
+                                                              FontWeight.bold)),
+                                                  const TextSpan(text: " and"),
+                                                  TextSpan(
+                                                      text: " Privacy Policy",
+                                                      style: TextStyle(
+                                                          color: Colors
+                                                              .blue.shade700,
+                                                          fontWeight:
+                                                              FontWeight.bold)),
+                                                ])),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
                               )
                             : const SizedBox(),
                         SizedBox(
@@ -292,7 +312,7 @@ class _AuthStatusScreenState extends State<AuthScreen> {
                           height: deviceSize.height * 0.075,
                           width: deviceSize.width * 0.9,
                           decoration: BoxDecoration(
-                              color: Colors.blue[700],
+                              color: Colors.black,
                               borderRadius: BorderRadius.circular(10)),
                           child: Center(
                               child: Text(
@@ -399,19 +419,6 @@ class _AuthStatusScreenState extends State<AuthScreen> {
                   ),
                 ),
               ),
-              /*          ElevatedButton(
-                  onPressed: () {
-                    if (_AuthStatusStatus == AuthStatus.signUp) {
-                      setState(() {
-                        _AuthStatusStatus = AuthStatus.logIn;
-                      });
-                    } else {
-                      setState(() {
-                        _AuthStatusStatus = AuthStatus.signUp;
-                      });
-                    }
-                  },
-                  child: const Text("Switch Screen")),*/
               SizedBox(
                 height: deviceSize.height * 0.025,
               ),
